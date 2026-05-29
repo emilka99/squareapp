@@ -422,9 +422,9 @@ export default function DodajMieszkanie() {
                   className="font-light leading-[1.55] max-w-[480px]"
                   style={{ fontSize: "clamp(20px, 2.2vw, 28px)", color: "#ffffff" }}
                 >
-                  "Oddałem mieszkanie Squarestate 3 lata temu.
+                  &ldquo;Oddałem mieszkanie Squarestate 3 lata temu.
                   Od tamtej pory nie kiwnąłem palcem —
-                  a co miesiąc wpływa przelew."
+                  a co miesiąc wpływa przelew.&rdquo;
                 </p>
                 <p
                   className="mt-6 text-[15px] font-normal leading-snug"
