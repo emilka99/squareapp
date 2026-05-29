@@ -3,6 +3,7 @@
 import { useRef, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { asset } from "@/lib/asset";
 
 const contacts = [
   {
@@ -98,7 +99,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="py-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <Link href="/" className="flex items-center gap-3">
-            <img src="/assets/squareblack.png" alt="Squarestate" className="h-6 w-auto opacity-40" />
+            <img src={asset("/assets/squareblack.png")} alt="Squarestate" className="h-6 w-auto opacity-40" />
             <span className="text-[13px] leading-none uppercase tracking-widest font-normal text-ink/50">
               ©2026
             </span>

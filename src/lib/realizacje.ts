@@ -1,3 +1,5 @@
+import { asset } from './asset'
+
 export type Apartment = {
   slug: string;
   name: string;
@@ -17,7 +19,7 @@ export const apartments: Apartment[] = [
     description:
       "Elegancki apartament w sercu Starego Miasta, urządzony z dbałością o detale. Charakterystyczna niebieska sypialnia i klasyczne wykończenia tworzą wyjątkowy klimat, który zachwyca gości z całego świata.",
     coords: [50.0629, 19.9435],
-    images: ["/assets/realizacje/sw-marka-31/cover.png"],
+    images: [asset("/assets/realizacje/sw-marka-31/cover.png")],
   },
   {
     slug: "starowislna-68",
@@ -27,7 +29,7 @@ export const apartments: Apartment[] = [
     description:
       "Nowoczesny apartament z minimalistycznym wnętrzem w stylu skandynawskim. Jasne kolory, naturalne materiały i przemyślany homestaging sprawiają, że obłożenie sięga 96% przez cały rok.",
     coords: [50.0554, 19.9527],
-    images: ["/assets/realizacje/starowislna-68/cover.png"],
+    images: [asset("/assets/realizacje/starowislna-68/cover.png")],
   },
   {
     slug: "augustianska-1",
@@ -37,7 +39,7 @@ export const apartments: Apartment[] = [
     description:
       "Wyjątkowy apartament na poddaszu w klimatycznym Kazimierzu. Drewniane belki, ceglane akcenty i pomarańczowa sofa tworzą przestrzeń pełną charakteru — idealną dla gości szukających autentycznego krakowskiego klimatu.",
     coords: [50.0518, 19.944],
-    images: ["/assets/realizacje/augustianska-1/cover.png"],
+    images: [asset("/assets/realizacje/augustianska-1/cover.png")],
   },
   {
     slug: "dietla-68",
@@ -47,7 +49,7 @@ export const apartments: Apartment[] = [
     description:
       "Przestronny apartament przy Plantach z elegancką sypialnią. Klasyczna kolorystyka i wysokiej klasy wyposażenie zapewniają gościom komfort na najwyższym poziomie.",
     coords: [50.0554, 19.9484],
-    images: ["/assets/realizacje/dietla-68/cover.png"],
+    images: [asset("/assets/realizacje/dietla-68/cover.png")],
   },
   {
     slug: "sw-sebastiana-31",
@@ -57,7 +59,7 @@ export const apartments: Apartment[] = [
     description:
       "Przytulny apartament z gustownym wystrojem i dbałością o każdy detal. Neutralna paleta barw i wysokiej jakości tekstylia tworzą przestrzeń, w której goście czują się jak w domu.",
     coords: [50.0544, 19.9413],
-    images: ["/assets/realizacje/sw-sebastiana-31/cover.png"],
+    images: [asset("/assets/realizacje/sw-sebastiana-31/cover.png")],
   },
   {
     slug: "willa-podgorze",

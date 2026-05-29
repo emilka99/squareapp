@@ -10,6 +10,7 @@ import {
   type Variants,
 } from "framer-motion";
 import { SITE_CONTAINER } from "@/lib/layout";
+import { asset } from "@/lib/asset";
 
 const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
@@ -188,7 +189,7 @@ export default function DodajMieszkanie() {
       {/* ── FULL-WIDTH IMAGE ─────────────────────────────────────── */}
       <div className="w-full overflow-hidden">
         <img
-          src="/assets/11image.png"
+          src={asset("/assets/11image.png")}
           alt=""
           className="w-full object-cover"
           style={{ aspectRatio: "16/7" }}

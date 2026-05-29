@@ -9,6 +9,7 @@ import {
   type Variants,
 } from "framer-motion";
 import clsx from "clsx";
+import { asset } from "@/lib/asset";
 
 /* ─── animation defaults ──────────────────────────────────────── */
 
@@ -241,7 +242,7 @@ function StatsStrip() {
                   </span>
                   {superhost && (
                     <img
-                      src="/assets/superhostlabel.png"
+                      src={asset("/assets/superhostlabel.png")}
                       alt="Airbnb Superhost"
                       className="mb-1 shrink-0"
                       style={{ height: "clamp(22px, 2vw, 30px)", width: "auto" }}
@@ -489,7 +490,7 @@ export default function Home() {
         {/* Right: photo */}
         <div className="relative h-[65vw] lg:h-auto min-h-[400px]">
           <Image
-            src="/assets/mainpagetop.png"
+            src={asset("/assets/mainpagetop.png")}
             alt=""
             fill
             className="object-cover object-center"
@@ -564,7 +565,7 @@ export default function Home() {
         {/* Full-width image below */}
         <div className="relative w-full" style={{ height: "clamp(260px, 35vw, 520px)" }}>
           <Image
-            src="/assets/3IMAGE.png"
+            src={asset("/assets/3IMAGE.png")}
             alt=""
             fill
             className="object-cover object-center"
@@ -625,7 +626,7 @@ export default function Home() {
         {/* Background image — blurred */}
         <div className="absolute inset-0 overflow-hidden">
           <Image
-            src="/assets/2image.png"
+            src={asset("/assets/2image.png")}
             alt=""
             fill
             className="object-cover object-center scale-110 blur-md"

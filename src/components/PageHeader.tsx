@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { asset } from "@/lib/asset";
 
 interface PageHeaderProps {
   imageSrc?: string;
@@ -61,7 +62,7 @@ export default function PageHeader({
           transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1], delay: 0.25 }}
         >
           <img
-            src="/assets/Intersect.svg"
+            src={asset("/assets/Intersect.svg")}
             alt=""
             aria-hidden="true"
             className="w-full h-full"

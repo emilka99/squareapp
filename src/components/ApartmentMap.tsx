@@ -24,7 +24,7 @@ export default function ApartmentMap({ coords, name, address }: Props) {
       if (!containerRef.current) return;
 
       const icon = L.icon({
-        iconUrl: "/assets/map-pin.svg",
+        iconUrl: `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/assets/map-pin.svg`,
         iconSize: [24, 32],
         iconAnchor: [12, 32],
       });

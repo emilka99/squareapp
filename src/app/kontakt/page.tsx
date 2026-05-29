@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence, type Variants } from "framer-motion";
 import clsx from "clsx";
+import { asset } from "@/lib/asset";
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 40 },
@@ -331,7 +332,7 @@ export default function Kontakt() {
           style={{ aspectRatio: "16/6" }}
         >
           <img
-            src="/assets/map-krakow.png"
+            src={asset("/assets/map-krakow.png")}
             alt="Mapa Kraków — ul. Dietla 80/5"
             className="w-full h-full object-cover object-center"
           />

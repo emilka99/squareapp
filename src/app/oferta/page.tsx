@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion, type Variants } from "framer-motion";
 import DodatkoweUslugi from "@/components/DodatkoweUslugi";
 import PageHeader from "@/components/PageHeader";
+import { asset } from "@/lib/asset";
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 40 },
@@ -134,7 +135,7 @@ export default function Oferta() {
               className="flex items-stretch justify-center min-h-[360px] bg-bg"
             >
               <img
-                src="/assets/5image.png"
+                src={asset("/assets/5image.png")}
                 alt=""
                 className="w-[80%] object-contain object-top block"
               />

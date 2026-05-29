@@ -4,6 +4,7 @@ import { useRef } from "react";
 import Link from "next/link";
 import { motion, useScroll, useTransform, type Variants } from "framer-motion";
 import { SITE_CONTAINER } from "@/lib/layout";
+import { asset } from "@/lib/asset";
 
 const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
@@ -170,7 +171,7 @@ export default function ONas() {
             style={{ aspectRatio: "1/1" }}
           >
             <img
-              src="/assets/10image.png"
+              src={asset("/assets/10image.png")}
               alt="Kraków — Rynek Główny"
               className="w-full h-full object-cover object-center"
             />

@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import clsx from "clsx";
+import { asset } from "@/lib/asset";
 
 function useScrollHide() {
   const [hidden, setHidden] = useState(false);
@@ -62,7 +63,7 @@ export default function Nav() {
           {/* Logo + lang */}
           <div className="flex items-center gap-4 shrink-0">
             <Link href="/" className="flex items-center">
-              <img src="/assets/squareblack.png" alt="Squarestate" className="h-[22px] w-auto" />
+              <img src={asset("/assets/squareblack.png")} alt="Squarestate" className="h-[22px] w-auto" />
             </Link>
             <div className="hidden lg:flex items-center gap-1.5 text-[11px] tracking-[0.16em]">
               <button
