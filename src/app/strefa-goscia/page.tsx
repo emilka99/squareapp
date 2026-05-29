@@ -74,11 +74,11 @@ function ReviewCarousel() {
                     <span key={j} className="text-sage">★</span>
                   ))}
                 </p>
-                <p className="font-serif tracking-tight text-ink leading-snug mb-6" style={{ fontSize: "clamp(18px, 2vw, 24px)" }}>
+                <p className="tracking-tight text-ink leading-snug mb-6">
                   &ldquo;{r.quote}&rdquo;
                 </p>
-                <p className="text-[11px] uppercase tracking-[0.2em] text-ink">{r.author}</p>
-                <p className="text-[10px] uppercase tracking-[0.2em] text-muted mt-1">{r.source}</p>
+                <p className="text-[13px] leading-none uppercase tracking-widest font-normal text-ink">{r.author}</p>
+                <p className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mt-1">{r.source}</p>
               </div>
             </div>
           ))}
@@ -104,9 +104,10 @@ export default function StrefaGoscia() {
 
   return (
     <>
+
       {/* ── TWO-COLUMN HERO + BOOKING WIDGET ─────────────────────── */}
       <section className="border-b border-muted">
-        <div className="max-w-layout mx-auto px-8 md:px-16 py-20 md:py-28">
+        <div className="max-w-layout mx-auto px-6 md:px-[48px] lg:px-[64px] py-20 md:py-28">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 items-start">
             {/* Left */}
             <motion.div
@@ -114,13 +115,12 @@ export default function StrefaGoscia() {
               animate="show"
               variants={{ hidden: {}, show: { transition: { staggerChildren: 0.09 } } }}
             >
-              <motion.p variants={fadeUp} className="text-[11px] uppercase tracking-[0.2em] text-muted mb-6">
-                Strefa gościa
+              <motion.p variants={fadeUp} className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-6">
+                Dla gościa
               </motion.p>
               <motion.h1
                 variants={fadeUp}
-                className="font-serif tracking-tight text-ink leading-[1.04]"
-                style={{ fontSize: "clamp(44px, 5.5vw, 72px)" }}
+                className="tracking-tight text-ink leading-[1.04]"
               >
                 Zarezerwuj apartament
               </motion.h1>
@@ -136,11 +136,11 @@ export default function StrefaGoscia() {
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
               className="border border-muted p-8"
             >
-              <p className="text-[10px] uppercase tracking-[0.2em] text-muted mb-6">Szukaj apartamentu</p>
+              <p className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-6">Szukaj apartamentu</p>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border border-muted mb-4">
                 <div className="p-4 border-b md:border-b-0 md:border-r border-muted">
-                  <label className="block text-[10px] uppercase tracking-[0.2em] text-muted mb-2">Przyjazd</label>
+                  <label className="block text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-2">Przyjazd</label>
                   <input
                     type="date"
                     value={checkIn}
@@ -149,7 +149,7 @@ export default function StrefaGoscia() {
                   />
                 </div>
                 <div className="p-4 border-b md:border-b-0 md:border-r border-muted">
-                  <label className="block text-[10px] uppercase tracking-[0.2em] text-muted mb-2">Wyjazd</label>
+                  <label className="block text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-2">Wyjazd</label>
                   <input
                     type="date"
                     value={checkOut}
@@ -158,7 +158,7 @@ export default function StrefaGoscia() {
                   />
                 </div>
                 <div className="p-4">
-                  <label className="block text-[10px] uppercase tracking-[0.2em] text-muted mb-2">Goście</label>
+                  <label className="block text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-2">Goście</label>
                   <select
                     value={guests}
                     onChange={(e) => setGuests(e.target.value)}
@@ -171,11 +171,11 @@ export default function StrefaGoscia() {
                 </div>
               </div>
 
-              <button className="w-full py-3.5 bg-ink text-bg text-[11px] uppercase tracking-[0.2em] hover:bg-sage transition-colors">
+              <button className="w-full py-3.5 bg-ink text-bg text-[13px] leading-none uppercase tracking-widest font-normal hover:bg-sage transition-colors">
                 Szukaj apartamentu →
               </button>
 
-              <p className="mt-4 text-[10px] uppercase tracking-[0.2em] text-muted text-center">
+              <p className="mt-4 text-[13px] leading-none uppercase tracking-widest font-normal text-muted text-center">
                 Powered by Airbnb &amp; Booking.com
               </p>
             </motion.div>
@@ -216,17 +216,17 @@ export default function StrefaGoscia() {
           ))}
 
           <div className="absolute bottom-4 left-6">
-            <p className="text-[10px] uppercase tracking-[0.2em] text-muted">Kraków, Małopolska</p>
+            <p className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted">Kraków, Małopolska</p>
           </div>
         </motion.div>
       </section>
 
       {/* ── FEATURED APARTMENTS ──────────────────────────────────── */}
       <section className="border-b border-muted">
-        <div className="max-w-layout mx-auto px-8 md:px-16 py-20 md:py-28">
+        <div className="max-w-layout mx-auto px-6 md:px-[48px] lg:px-[64px] py-20 md:py-28">
           <motion.div initial="hidden" whileInView="show" viewport={VP} variants={stagger} className="mb-12">
-            <motion.p variants={fadeUp} className="text-[11px] uppercase tracking-[0.2em] text-muted mb-4">Polecamy</motion.p>
-            <motion.h2 variants={fadeUp} className="font-serif tracking-tight text-ink" style={{ fontSize: "clamp(34px, 4vw, 52px)" }}>
+            <motion.p variants={fadeUp} className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-4">Polecamy</motion.p>
+            <motion.h2 variants={fadeUp} className="tracking-tight text-ink">
               Wyróżnione apartamenty
             </motion.h2>
           </motion.div>
@@ -249,8 +249,8 @@ export default function StrefaGoscia() {
                 </div>
                 <div className="p-8">
                   <div className="flex items-start justify-between gap-3 mb-3">
-                    <h3 className="font-serif text-xl tracking-tight text-ink">{name}</h3>
-                    <span className="text-[10px] uppercase tracking-[0.2em] text-muted border border-muted px-2 py-0.5 shrink-0 mt-1">
+                    <h3 className="text-[20px] leading-snug font-medium text-ink">{name}</h3>
+                    <span className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted border border-muted px-2 py-0.5 shrink-0 mt-1">
                       {district}
                     </span>
                   </div>
@@ -262,10 +262,10 @@ export default function StrefaGoscia() {
                   </div>
                   <div className="flex items-end justify-between">
                     <div>
-                      <p className="text-[10px] uppercase tracking-[0.2em] text-muted">Od</p>
-                      <p className="font-serif text-2xl tracking-tight text-ink">{price} PLN <span className="text-sm text-muted font-sans">/noc</span></p>
+                      <p className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted">Od</p>
+                      <p className="text-[20px] md:text-[26px] leading-snug font-medium text-ink">{price} PLN <span className="text-sm text-muted font-sans">/noc</span></p>
                     </div>
-                    <span className="text-[11px] uppercase tracking-[0.2em] text-muted group-hover:text-ink group-hover:translate-x-1 transition-all duration-300 inline-block">
+                    <span className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted group-hover:text-ink group-hover:translate-x-1 transition-all duration-300 inline-block">
                       →
                     </span>
                   </div>
@@ -278,29 +278,29 @@ export default function StrefaGoscia() {
 
       {/* ── BOOKLET "JAK NIE ZGINĄĆ W KRAKOWIE" ─────────────────── */}
       <section className="border-b border-muted">
-        <div className="max-w-layout mx-auto px-8 md:px-16 py-20 md:py-28">
+        <div className="max-w-layout mx-auto px-6 md:px-[48px] lg:px-[64px] py-20 md:py-28">
           <motion.div initial="hidden" whileInView="show" viewport={VP} variants={stagger} className="mb-14">
-            <motion.p variants={fadeUp} className="text-[11px] uppercase tracking-[0.2em] text-muted mb-4">Przewodnik gościa</motion.p>
-            <motion.h2 variants={fadeUp} className="font-serif tracking-tight text-ink" style={{ fontSize: "clamp(34px, 4vw, 52px)" }}>
+            <motion.p variants={fadeUp} className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-4">Przewodnik gościa</motion.p>
+            <motion.h2 variants={fadeUp} className="tracking-tight text-ink">
               Jak nie zginąć w Krakowie
             </motion.h2>
           </motion.div>
 
           {/* Discounts */}
           <motion.div initial="hidden" whileInView="show" viewport={VP} variants={stagger}>
-            <motion.p variants={fadeUp} className="text-[10px] uppercase tracking-[0.2em] text-muted mb-6">Aktywne zniżki</motion.p>
+            <motion.p variants={fadeUp} className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-6">Aktywne zniżki</motion.p>
             <motion.div variants={stagger} className="grid grid-cols-1 md:grid-cols-2 gap-px bg-muted mb-16">
               {discounts.map(({ code, label, desc, discount }) => (
                 <motion.div key={code} variants={fadeUp} className="bg-bg p-8 flex items-start justify-between gap-6">
                   <div>
-                    <p className="text-[10px] uppercase tracking-[0.2em] text-muted mb-2">{label}</p>
+                    <p className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-2">{label}</p>
                     <p className="text-sm text-ink leading-relaxed mb-3">{desc}</p>
                     <div className="inline-flex items-center gap-2 border border-muted px-3 py-1">
-                      <span className="text-[10px] uppercase tracking-[0.2em] text-muted">Kod:</span>
+                      <span className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted">Kod:</span>
                       <span className="text-[11px] tracking-[0.15em] text-ink font-medium">{code}</span>
                     </div>
                   </div>
-                  <p className="font-serif text-3xl tracking-tight text-sage shrink-0">{discount}</p>
+                  <p className="text-[20px] md:text-[26px] leading-snug font-medium text-sage shrink-0">{discount}</p>
                 </motion.div>
               ))}
             </motion.div>
@@ -308,7 +308,7 @@ export default function StrefaGoscia() {
 
           {/* Restaurants */}
           <motion.div initial="hidden" whileInView="show" viewport={VP} variants={stagger}>
-            <motion.p variants={fadeUp} className="text-[10px] uppercase tracking-[0.2em] text-muted mb-6">
+            <motion.p variants={fadeUp} className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-6">
               Polecamy nasze restauracje
             </motion.p>
             <motion.div
@@ -324,7 +324,7 @@ export default function StrefaGoscia() {
                   <div className="w-10 h-10 border border-muted flex items-center justify-center mb-3 group-hover:border-ink transition-colors">
                     <span className="text-[9px] uppercase text-muted">logo</span>
                   </div>
-                  <p className="font-serif text-sm tracking-tight text-ink">{name}</p>
+                  <p className="text-[15px] leading-snug font-normal tracking-tight text-ink">{name}</p>
                 </motion.div>
               ))}
             </motion.div>
@@ -332,13 +332,13 @@ export default function StrefaGoscia() {
 
           {/* Additional services */}
           <motion.div initial="hidden" whileInView="show" viewport={VP} variants={stagger}>
-            <motion.p variants={fadeUp} className="text-[10px] uppercase tracking-[0.2em] text-muted mb-6">
+            <motion.p variants={fadeUp} className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-6">
               Dodatkowe usługi
             </motion.p>
             <motion.div variants={stagger} className="grid grid-cols-1 md:grid-cols-3 gap-px bg-muted">
               {services.map(({ title, desc }) => (
                 <motion.div key={title} variants={fadeUp} className="bg-bg p-8">
-                  <h3 className="font-serif text-xl tracking-tight text-ink mb-3">{title}</h3>
+                  <h3 className="text-[20px] leading-snug font-medium text-ink mb-3">{title}</h3>
                   <p className="text-sm text-muted leading-relaxed">{desc}</p>
                 </motion.div>
               ))}
@@ -350,13 +350,13 @@ export default function StrefaGoscia() {
       {/* ── REVIEWS CAROUSEL ─────────────────────────────────────── */}
       <section className="border-b border-muted">
         <div className="max-w-layout mx-auto py-20 md:py-28">
-          <div className="px-8 md:px-16 mb-12">
+          <div className="px-6 md:px-[48px] lg:px-[64px] mb-12">
             <motion.p initial="hidden" whileInView="show" viewport={VP} variants={fadeUp}
-              className="text-[11px] uppercase tracking-[0.2em] text-muted mb-4">
+              className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-4">
               Opinie
             </motion.p>
             <motion.h2 initial="hidden" whileInView="show" viewport={VP} variants={fadeUp}
-              className="font-serif tracking-tight text-ink" style={{ fontSize: "clamp(34px, 4vw, 52px)" }}>
+              className="tracking-tight text-ink">
               Co mówią goście
             </motion.h2>
           </div>
@@ -371,15 +371,15 @@ export default function StrefaGoscia() {
           whileInView="show"
           viewport={VP}
           variants={stagger}
-          className="max-w-layout mx-auto px-8 md:px-16 py-24 flex flex-col md:flex-row items-start md:items-end justify-between gap-8"
+          className="max-w-layout mx-auto px-6 md:px-[48px] lg:px-[64px] py-24 flex flex-col md:flex-row items-start md:items-end justify-between gap-8"
         >
-          <motion.h2 variants={fadeUp} className="font-serif tracking-tight text-ink max-w-lg" style={{ fontSize: "clamp(34px, 4vw, 52px)" }}>
+          <motion.h2 variants={fadeUp} className="tracking-tight text-ink max-w-lg">
             Byłeś naszym gościem?
           </motion.h2>
           <motion.div variants={fadeUp}>
             <a
               href="#"
-              className="inline-flex items-center gap-2 px-8 py-3.5 border border-ink text-ink text-[11px] uppercase tracking-[0.2em] hover:bg-ink hover:text-bg transition-colors whitespace-nowrap"
+              className="inline-flex items-center gap-2 px-8 py-3.5 border border-ink text-ink text-[13px] leading-none uppercase tracking-widest font-normal hover:bg-ink hover:text-bg transition-colors whitespace-nowrap"
             >
               Zostaw nam opinię
               <span>↗</span>

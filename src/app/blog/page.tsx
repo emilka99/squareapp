@@ -70,18 +70,17 @@ export default function Blog() {
       {/* ── HERO ─────────────────────────────────────────────────── */}
       <section className="border-b border-muted">
         <motion.div
-          className="max-w-layout mx-auto px-8 md:px-16 pt-20 md:pt-28 pb-14"
+          className="max-w-layout mx-auto px-6 md:px-[48px] lg:px-[64px] pt-20 md:pt-28 pb-14"
           initial="hidden"
           animate="show"
           variants={{ hidden: {}, show: { transition: { staggerChildren: 0.09 } } }}
         >
-          <motion.p variants={fadeUp} className="text-[11px] uppercase tracking-[0.2em] text-muted mb-6">
+          <motion.p variants={fadeUp} className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-6">
             Wiedza
           </motion.p>
           <motion.h1
             variants={fadeUp}
-            className="font-serif tracking-tight text-ink leading-[1.04]"
-            style={{ fontSize: "clamp(44px, 5.5vw, 80px)" }}
+            className="tracking-tight text-ink leading-[1.04]"
           >
             Blog
           </motion.h1>
@@ -93,14 +92,14 @@ export default function Blog() {
 
       {/* ── TAG FILTER ───────────────────────────────────────────── */}
       <section className="border-b border-muted sticky top-[68px] z-40 bg-bg">
-        <div className="max-w-layout mx-auto px-8 md:px-16">
+        <div className="max-w-layout mx-auto px-6 md:px-[48px] lg:px-[64px]">
           <div className="flex items-center gap-0 overflow-x-auto">
             {tags.map((t) => (
               <button
                 key={t}
                 onClick={() => setActive(t)}
                 className={clsx(
-                  "relative px-5 py-4 text-[11px] uppercase tracking-[0.2em] whitespace-nowrap transition-colors",
+                  "relative px-5 py-4 text-[13px] leading-none uppercase tracking-widest font-normal whitespace-nowrap transition-colors",
                   active === t ? "text-ink" : "text-muted hover:text-ink"
                 )}
               >
@@ -120,7 +119,7 @@ export default function Blog() {
 
       {/* ── ARTICLE GRID ─────────────────────────────────────────── */}
       <section className="border-b border-muted">
-        <div className="max-w-layout mx-auto px-8 md:px-16 py-16">
+        <div className="max-w-layout mx-auto px-6 md:px-[48px] lg:px-[64px] py-16">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-muted">
             {filtered.map(({ date, tag, title, excerpt }) => (
               <article key={title} className="bg-bg group cursor-pointer">
@@ -129,15 +128,15 @@ export default function Blog() {
                 </div>
                 <div className="p-8">
                   <div className="flex items-center gap-3 mb-3">
-                    <p className="text-[10px] uppercase tracking-[0.2em] text-muted">{date}</p>
+                    <p className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted">{date}</p>
                     <span className="text-muted">·</span>
-                    <p className="text-[10px] uppercase tracking-[0.2em] text-sage">{tag}</p>
+                    <p className="text-[13px] leading-none uppercase tracking-widest font-normal text-sage">{tag}</p>
                   </div>
-                  <h3 className="font-serif text-xl tracking-tight text-ink mb-3 group-hover:text-sage transition-colors leading-snug">
+                  <h3 className="text-[20px] leading-snug font-medium text-ink mb-3 group-hover:text-sage transition-colors leading-snug">
                     {title}
                   </h3>
                   <p className="text-sm text-muted leading-relaxed mb-5">{excerpt}</p>
-                  <span className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-ink group-hover:gap-3 transition-all duration-300">
+                  <span className="inline-flex items-center gap-2 text-[13px] leading-none uppercase tracking-widest font-normal text-ink group-hover:gap-3 transition-all duration-300">
                     Czytaj dalej
                     <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
                   </span>
@@ -150,7 +149,7 @@ export default function Blog() {
 
       {/* ── WKRÓTCE — TABLICA INFORMACYJNA ──────────────────────── */}
       <section>
-        <div className="max-w-layout mx-auto px-8 md:px-16 py-20 md:py-28">
+        <div className="max-w-layout mx-auto px-6 md:px-[48px] lg:px-[64px] py-20 md:py-28">
           <motion.div
             initial="hidden"
             whileInView="show"
@@ -158,13 +157,12 @@ export default function Blog() {
             variants={stagger}
             className="border border-muted p-8 md:p-16 max-w-2xl mx-auto text-center"
           >
-            <motion.p variants={fadeUp} className="text-[10px] uppercase tracking-[0.2em] text-muted mb-6">
+            <motion.p variants={fadeUp} className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-6">
               Wkrótce
             </motion.p>
             <motion.h2
               variants={fadeUp}
-              className="font-serif tracking-tight text-ink mb-4"
-              style={{ fontSize: "clamp(28px, 3.5vw, 44px)" }}
+              className="tracking-tight text-ink mb-4"
             >
               Tablica informacyjna dla SQUARE
             </motion.h2>
@@ -173,7 +171,7 @@ export default function Blog() {
               dedykowaną przestrzenią do komunikacji, ogłoszeń i wiedzy operacyjnej.
               Dostęp będzie wymagał logowania.
             </motion.p>
-            <motion.div variants={fadeUp} className="inline-flex items-center gap-2 px-6 py-2.5 border border-muted text-[11px] uppercase tracking-[0.2em] text-muted">
+            <motion.div variants={fadeUp} className="inline-flex items-center gap-2 px-6 py-2.5 border border-muted text-[13px] leading-none uppercase tracking-widest font-normal text-muted">
               <span className="w-1.5 h-1.5 rounded-full bg-sage animate-pulse" />
               W przygotowaniu
             </motion.div>

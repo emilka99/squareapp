@@ -30,11 +30,9 @@ const strefaItems = [
 ];
 
 const mainLinks = [
-  { href: "/strefa-goscia", label: "Strefa gościa" },
+  { href: "/strefa-goscia", label: "Dla gościa" },
   { href: "/realizacje", label: "Realizacje" },
   { href: "/o-nas", label: "O nas" },
-  { href: "/kariera", label: "Kariera" },
-  { href: "/blog", label: "Blog" },
   { href: "/kontakt", label: "Kontakt" },
 ];
 
@@ -60,7 +58,7 @@ export default function Nav() {
         transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
         className="fixed inset-x-0 top-0 z-50 bg-bg"
       >
-        <div className="max-w-layout mx-auto px-8 lg:px-16 h-[68px] flex items-center gap-8">
+        <div className="max-w-layout mx-auto px-6 md:px-[48px] lg:px-[64px] h-[68px] flex items-center gap-8">
           {/* Logo + lang */}
           <div className="flex items-center gap-4 shrink-0">
             <Link href="/" className="flex items-center">
@@ -69,14 +67,14 @@ export default function Nav() {
             <div className="hidden lg:flex items-center gap-1.5 text-[11px] tracking-[0.16em]">
               <button
                 onClick={() => setLang("PL")}
-                className={clsx("transition-colors", lang === "PL" ? "text-ink font-bold" : "text-muted hover:text-ink")}
+                className={clsx("transition-colors", lang === "PL" ? "text-ink font-medium" : "text-muted hover:text-ink")}
               >
                 PL
               </button>
               <span className="text-muted">/</span>
               <button
                 onClick={() => setLang("EN")}
-                className={clsx("transition-colors", lang === "EN" ? "text-ink font-bold" : "text-muted hover:text-ink")}
+                className={clsx("transition-colors", lang === "EN" ? "text-ink font-medium" : "text-muted hover:text-ink")}
               >
                 EN
               </button>
@@ -85,7 +83,7 @@ export default function Nav() {
 
           {/* Desktop nav — centered */}
           <nav className="hidden lg:flex items-center gap-7 flex-1 justify-center">
-            {/* Strefa klienta dropdown */}
+            {/* Dla klienta dropdown */}
             <div
               className="relative"
               onMouseEnter={() => setDropdown(true)}
@@ -94,7 +92,7 @@ export default function Nav() {
               <button
                 className="relative flex items-center gap-1.5 text-[11px] tracking-[0.16em] uppercase pb-0.5 text-ink transition-colors hover:opacity-70"
               >
-                Strefa klienta
+                Dla klienta
                 <motion.svg
                   animate={{ rotate: dropdown ? 180 : 0 }}
                   transition={{ duration: 0.2 }}
@@ -205,9 +203,9 @@ export default function Nav() {
               transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
               className="overflow-hidden border-t border-muted lg:hidden"
             >
-              <div className="px-8 pb-6 flex flex-col">
+              <div className="px-6 pb-6 flex flex-col">
                 <p className="py-3 text-[10px] tracking-[0.2em] uppercase text-muted border-b border-muted">
-                  Strefa klienta
+                  Dla klienta
                 </p>
                 {strefaItems.map(({ href, label }) => (
                   <Link

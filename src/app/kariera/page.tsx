@@ -58,18 +58,17 @@ export default function Kariera() {
       {/* ── HERO ─────────────────────────────────────────────────── */}
       <section className="border-b border-muted">
         <motion.div
-          className="max-w-layout mx-auto px-8 md:px-16 pt-20 md:pt-28 pb-14"
+          className="max-w-layout mx-auto px-6 md:px-[48px] lg:px-[64px] pt-20 md:pt-28 pb-14"
           initial="hidden"
           animate="show"
           variants={{ hidden: {}, show: { transition: { staggerChildren: 0.09 } } }}
         >
-          <motion.p variants={fadeUp} className="text-[11px] uppercase tracking-[0.2em] text-muted mb-6">
+          <motion.p variants={fadeUp} className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-6">
             Dołącz do nas
           </motion.p>
           <motion.h1
             variants={fadeUp}
-            className="font-serif tracking-tight text-ink leading-[1.04] max-w-2xl"
-            style={{ fontSize: "clamp(44px, 5.5vw, 80px)" }}
+            className="tracking-tight text-ink leading-[1.04] max-w-2xl"
           >
             Dołącz do zespołu
           </motion.h1>
@@ -82,12 +81,12 @@ export default function Kariera() {
 
       {/* ── JOB LISTINGS ─────────────────────────────────────────── */}
       <section className="border-b border-muted">
-        <div className="max-w-layout mx-auto px-8 md:px-16 py-20 md:py-28">
+        <div className="max-w-layout mx-auto px-6 md:px-[48px] lg:px-[64px] py-20 md:py-28">
           <motion.div initial="hidden" whileInView="show" viewport={VP} variants={stagger} className="mb-14">
-            <motion.p variants={fadeUp} className="text-[11px] uppercase tracking-[0.2em] text-muted mb-4">
+            <motion.p variants={fadeUp} className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-4">
               Otwarte rekrutacje
             </motion.p>
-            <motion.h2 variants={fadeUp} className="font-serif tracking-tight text-ink" style={{ fontSize: "clamp(34px, 4vw, 52px)" }}>
+            <motion.h2 variants={fadeUp} className="tracking-tight text-ink">
               Aktualne oferty pracy
             </motion.h2>
           </motion.div>
@@ -103,21 +102,21 @@ export default function Kariera() {
               <motion.div key={title} variants={fadeUp} className="bg-bg p-8 md:p-10 group">
                 <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
                   <div>
-                    <h3 className="font-serif tracking-tight text-ink mb-2" style={{ fontSize: "clamp(22px, 2.2vw, 30px)" }}>
+                    <h3 className="tracking-tight text-ink mb-2">
                       {title}
                     </h3>
                     <div className="flex items-center gap-3 flex-wrap">
-                      <span className="text-[10px] uppercase tracking-[0.2em] text-muted border border-muted px-2 py-0.5">
+                      <span className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted border border-muted px-2 py-0.5">
                         {type}
                       </span>
-                      <span className="text-[10px] uppercase tracking-[0.2em] text-muted">
+                      <span className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted">
                         {location}
                       </span>
                     </div>
                   </div>
                   <Link
                     href="/kontakt"
-                    className="shrink-0 inline-block px-6 py-2.5 border border-ink text-ink text-[11px] uppercase tracking-[0.2em] hover:bg-ink hover:text-bg transition-colors"
+                    className="shrink-0 inline-block px-6 py-2.5 border border-ink text-ink text-[13px] leading-none uppercase tracking-widest font-normal hover:bg-ink hover:text-bg transition-colors"
                   >
                     Aplikuj
                   </Link>
@@ -141,12 +140,12 @@ export default function Kariera() {
 
       {/* ── KULTURA FIRMY ────────────────────────────────────────── */}
       <section className="border-b border-muted">
-        <div className="max-w-layout mx-auto px-8 md:px-16 py-20 md:py-28">
+        <div className="max-w-layout mx-auto px-6 md:px-[48px] lg:px-[64px] py-20 md:py-28">
           <motion.div initial="hidden" whileInView="show" viewport={VP} variants={stagger} className="mb-14">
-            <motion.p variants={fadeUp} className="text-[11px] uppercase tracking-[0.2em] text-muted mb-4">
+            <motion.p variants={fadeUp} className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-4">
               Kultura
             </motion.p>
-            <motion.h2 variants={fadeUp} className="font-serif tracking-tight text-ink" style={{ fontSize: "clamp(34px, 4vw, 52px)" }}>
+            <motion.h2 variants={fadeUp} className="tracking-tight text-ink">
               Jak pracujemy
             </motion.h2>
           </motion.div>
@@ -160,10 +159,10 @@ export default function Kariera() {
           >
             {cultureValues.map(({ num, title, desc }) => (
               <motion.div key={num} variants={fadeUp} className="bg-bg p-8 md:p-10">
-                <p className="font-serif tracking-tight text-muted/50 leading-none mb-6" style={{ fontSize: "clamp(48px, 5vw, 64px)" }}>
+                <p className="tracking-tight text-muted/50 leading-none mb-6">
                   {num}
                 </p>
-                <h3 className="font-serif tracking-tight text-ink mb-3" style={{ fontSize: "clamp(22px, 2vw, 28px)" }}>
+                <h3 className="tracking-tight text-ink mb-3">
                   {title}
                 </h3>
                 <p className="text-sm text-muted leading-relaxed">{desc}</p>
@@ -180,13 +179,13 @@ export default function Kariera() {
           whileInView="show"
           viewport={VP}
           variants={stagger}
-          className="max-w-layout mx-auto px-8 md:px-16 py-24 flex flex-col md:flex-row items-start md:items-end justify-between gap-8"
+          className="max-w-layout mx-auto px-6 md:px-[48px] lg:px-[64px] py-24 flex flex-col md:flex-row items-start md:items-end justify-between gap-8"
         >
-          <motion.h2 variants={fadeUp} className="font-serif tracking-tight text-ink max-w-lg" style={{ fontSize: "clamp(34px, 4vw, 52px)" }}>
+          <motion.h2 variants={fadeUp} className="tracking-tight text-ink max-w-lg">
             Nie widzisz odpowiedniej oferty?
           </motion.h2>
           <motion.div variants={fadeUp}>
-            <Link href="/kontakt" className="inline-block px-8 py-3.5 bg-ink text-bg text-[11px] uppercase tracking-[0.2em] hover:bg-sage transition-colors whitespace-nowrap">
+            <Link href="/kontakt" className="inline-block px-8 py-3.5 bg-ink text-bg text-[13px] leading-none uppercase tracking-widest font-normal hover:bg-sage transition-colors whitespace-nowrap">
               Napisz do nas
             </Link>
           </motion.div>

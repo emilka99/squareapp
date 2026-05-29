@@ -1,151 +1,287 @@
 "use client";
 
+import { useRef } from "react";
 import Link from "next/link";
-import { motion, type Variants } from "framer-motion";
+import { motion, useScroll, useTransform, type Variants } from "framer-motion";
+import { SITE_CONTAINER } from "@/lib/layout";
+
+const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
 const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 40 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
+  hidden: { opacity: 0, y: 30 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease } },
 };
-const stagger: Variants = { hidden: {}, show: { transition: { staggerChildren: 0.1 } } };
-const VP = { once: true, margin: "-100px" } as const;
+const stagger: Variants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.09 } },
+};
+const VP = { once: true, margin: "-80px" } as const;
 
 const timeline = [
-  { year: "2016", title: "Pierwsze mieszkanie", desc: "Start na Kazimierzu. Jeden apartament, jedno marzenie." },
-  { year: "2018", title: "50 mieszkań", desc: "Własna ekipa sprzątająca, pierwsze standardy operacyjne." },
-  { year: "2020", title: "100 mieszkań", desc: "Otwarcie własnej pralni i rozbudowa zaplecza technicznego." },
-  { year: "2022", title: "Benno Aparthotel", desc: "Uruchomienie Benno — własnego aparthotelu w centrum Krakowa." },
-  { year: "2024", title: "200+ mieszkań", desc: "Autorskie oprogramowanie PMS i rozbudowany ekosystem usług." },
-];
-
-const team = [
-  {
-    name: "Andrzej Wranik",
-    role: "Partner",
-    desc: "Założyciel i główny strateg. Rynek nieruchomości Krakowa od 2010 roku.",
-    contact: null,
-  },
-  {
-    name: "Sara Wabik",
-    role: "Head of Business Development",
-    desc: "Odpowiada za pozyskiwanie nowych nieruchomości i relacje z właścicielami.",
-    contact: "sara.wabik@squareapartments.pl",
-  },
-  {
-    name: "Aleksandra Masłowska",
-    role: "Head Manager",
-    desc: "Zarządza operacjami — od obsługi gości po koordinację zespołów terenowych.",
-    contact: "aleksandra@squarestate.pl",
-  },
-];
-
-const values = [
-  { num: "200+", label: "zarządzanych mieszkań", desc: "Jeden z największych portfeli krótkoterminowych w Krakowie." },
-  { num: "97%", label: "maksymalne obłożenie", desc: "Szczytowe wyniki sezonu dzięki dynamic pricing i optymalizacji ofert." },
-  { num: "45 000+", label: "pozytywnych opinii", desc: "Ocena 4.77★ w Airbnb i Booking.com na przestrzeni lat." },
+  { year: "2016", title: "Pierwsze mieszkanie", desc: "Start na Kazimierzu. Jeden apartament, jedno marzenie — zrodzić z Krakowa coś trwałego." },
+  { year: "2018", title: "50 mieszkań", desc: "Własna ekipa sprzątająca i pierwsze standardy operacyjne, które obowiązują do dziś." },
+  { year: "2020", title: "100 mieszkań", desc: "Otwarcie własnej pralni i rozbudowa zaplecza technicznego. Skala wymagała systemu." },
+  { year: "2022", title: "Benno Aparthotel", desc: "Uruchomienie Benno — własnego aparthotelu w centrum Krakowa. Nasz flagowy obiekt." },
+  { year: "2024", title: "200+ mieszkań", desc: "Autorskie oprogramowanie PMS i rozbudowany ekosystem usług pod jednym szyldem." },
 ];
 
 const ecosystem = [
-  { name: "Benno Aparthotel", type: "Aparthotel" },
-  { name: "Filthy Burger", type: "Restauracja" },
-  { name: "Pora", type: "Restauracja" },
-  { name: "Auro", type: "Restauracja" },
-  { name: "Kropka", type: "Restauracja" },
+  { name: "BENNO", type: "Aparthotel · Kazimierz", address: "ul. Augustiańska 1", instagram: "benno_krakow", bg: "#7d7d6e" },
+  { name: "BĀR", type: "Kuchnia azjatycka", address: "ul. Augustiańska 1", instagram: "bar_krakow", bg: "#5a4a42" },
+  { name: "PORA", type: "Śniadaniownia", address: "ul. Dietla 31", instagram: "pora.krakow", bg: "#2e3a45" },
+  { name: "AURO", type: "Restauracja", address: "ul. Szewska 7", instagram: "auro_krakow", bg: "#4a3d30" },
+  { name: "KROPKA", type: "Restauracja", address: "ul. Starowiślna 14", instagram: "kropka_krakow", bg: "#3d4a3d" },
 ];
+
+const team = [
+  { name: "Andrzej Wranik", role: "Partner", desc: "Założyciel i główny strateg. Rynek nieruchomości Krakowa od 2010 roku.", contact: null },
+  { name: "Sara Wabik", role: "Head of Business Development", desc: "Odpowiada za pozyskiwanie nowych nieruchomości i relacje z właścicielami.", contact: "sara.wabik@squareapartments.pl" },
+  { name: "Aleksandra Masłowska", role: "Head Manager", desc: "Zarządza operacjami — od obsługi gości po koordynację zespołów terenowych.", contact: "aleksandra@squarestate.pl" },
+];
+
+function InstagramIcon() {
+  return (
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="2" y="2" width="20" height="20" rx="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+function TimelineSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start 85%", "end 45%"],
+  });
+  const lineScaleY = useTransform(scrollYProgress, [0, 1], [0, 1]);
+
+  return (
+    <section ref={sectionRef} className="border-b border-muted">
+      <div className={`${SITE_CONTAINER} py-20 md:py-28`}>
+        <motion.p
+          initial="hidden"
+          whileInView="show"
+          viewport={VP}
+          variants={fadeUp}
+          className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-16"
+        >
+          Historia firmy
+        </motion.p>
+
+        {/* Two-column grid: year | content, line at centre */}
+        <div className="relative">
+          {/* Animated vertical line — runs full height, centred between columns */}
+          <div
+            className="absolute top-0 bottom-0 w-px bg-muted/30"
+            style={{ left: "50%" }}
+          >
+            <motion.div
+              className="w-full bg-ink origin-top"
+              style={{ height: "100%", scaleY: lineScaleY }}
+            />
+          </div>
+
+          {timeline.map(({ year, title, desc }, i) => (
+            <motion.div
+              key={year}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.6, ease, delay: 0.05 * i }}
+              className="grid grid-cols-2 relative border-b border-muted/30 last:border-b-0"
+            >
+              {/* Square dot on the centre line */}
+              <div
+                className="absolute bg-ink"
+                style={{
+                  left: "50%",
+                  top: "2.75rem",
+                  width: 10,
+                  height: 10,
+                  transform: "translate(-50%, -50%)",
+                }}
+              />
+
+              {/* Left — year */}
+              <div className="py-12 pr-16 text-right flex items-start justify-end">
+                <p
+                  className="font-display font-normal leading-none text-ink"
+                  style={{ fontSize: "clamp(28px, 3vw, 44px)" }}
+                >
+                  {year}
+                </p>
+              </div>
+
+              {/* Right — content */}
+              <div className="py-12 pl-16">
+                <p className="text-[18px] md:text-[22px] font-normal leading-snug text-ink mb-2">
+                  {title}
+                </p>
+                <p className="text-[15px] font-normal leading-relaxed text-muted">
+                  {desc}
+                </p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 
 export default function ONas() {
   return (
     <>
-      {/* ── HERO SPLIT ───────────────────────────────────────────── */}
+      {/* HERO: O NAS */}
       <section className="border-b border-muted">
-        <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[480px] md:min-h-[580px]">
+        <div className="grid grid-cols-1 lg:grid-cols-2">
           {/* Left: text */}
           <motion.div
-            className="px-8 md:px-16 py-20 md:py-28 flex flex-col justify-center lg:pl-[max(2rem,calc((100vw-1316px)/2+4rem))]"
             initial="hidden"
             animate="show"
-            variants={{ hidden: {}, show: { transition: { staggerChildren: 0.09 } } }}
+            variants={stagger}
+            className="py-20 md:py-28 px-6 md:px-[48px] lg:px-[64px] flex flex-col justify-center lg:max-w-[720px] lg:ml-auto lg:mr-0 lg:pl-[64px] lg:pr-20"
           >
-            <motion.p variants={fadeUp} className="text-[11px] uppercase tracking-[0.2em] text-muted mb-6">
-              Firma
-            </motion.p>
             <motion.h1
               variants={fadeUp}
-              className="font-serif tracking-tight text-ink leading-[1.04]"
-              style={{ fontSize: "clamp(52px, 6.5vw, 88px)" }}
+              className="leading-none tracking-tight uppercase font-medium text-ink mb-8"
+              style={{ fontSize: "clamp(52px, 7vw, 96px)" }}
             >
               O nas
             </motion.h1>
-            <motion.p variants={fadeUp} className="mt-6 text-muted leading-relaxed max-w-sm">
+            <motion.p
+              variants={fadeUp}
+              className="text-[18px] md:text-[20px] font-light leading-[1.6] text-muted max-w-[440px]"
+            >
               Od 2016 roku zamieniamy krakowskie mieszkania w dochodowe inwestycje.
               Dziś zarządzamy ponad 200 apartamentami i tworzymy jeden z największych
               ekosystemów gościnności w Krakowie.
             </motion.p>
           </motion.div>
 
-          {/* Right: image */}
+          {/* Right: square image */}
           <motion.div
             initial={{ opacity: 0, scale: 1.03 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-            className="h-[360px] lg:h-auto bg-sage/20 overflow-hidden"
+            transition={{ duration: 1.0, ease, delay: 0.15 }}
+            className="overflow-hidden"
+            style={{ aspectRatio: "1/1" }}
           >
-            <div className="w-full h-full bg-gradient-to-br from-sage/10 to-sage/30" />
+            <img
+              src="/assets/10image.png"
+              alt="Kraków — Rynek Główny"
+              className="w-full h-full object-cover object-center"
+            />
           </motion.div>
         </div>
       </section>
 
-      {/* ── TIMELINE ─────────────────────────────────────────────── */}
+      {/* TIMELINE */}
+      <TimelineSection />
+
+      {/* EKOSYSTEM — full-bleed horizontal carousel */}
       <section className="border-b border-muted overflow-hidden">
-        <div className="max-w-layout mx-auto px-8 md:px-16 py-16 md:py-24">
-          <motion.p
+        <div className={`${SITE_CONTAINER} pt-20 md:pt-28 pb-10`}>
+          <motion.div
             initial="hidden"
             whileInView="show"
             viewport={VP}
-            variants={fadeUp}
-            className="text-[11px] uppercase tracking-[0.2em] text-muted mb-12"
+            variants={stagger}
           >
-            Historia firmy
-          </motion.p>
-
-          {/* Horizontal scroll on mobile */}
-          <div className="overflow-x-auto pb-4 -mx-8 px-8 md:mx-0 md:px-0">
-            <motion.div
-              initial="hidden"
-              whileInView="show"
-              viewport={VP}
-              variants={{ hidden: {}, show: { transition: { staggerChildren: 0.12 } } }}
-              className="flex gap-0 min-w-max md:min-w-0 md:grid md:grid-cols-5"
+            <motion.p
+              variants={fadeUp}
+              className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-4"
             >
-              {timeline.map(({ year, title, desc }, i) => (
-                <motion.div
-                  key={year}
-                  variants={fadeUp}
-                  className="relative pr-10 md:pr-0 md:border-r last:border-r-0 border-muted md:pl-8 first:pl-0 w-56 md:w-auto shrink-0 md:shrink"
+              Ekosystem
+            </motion.p>
+            <motion.h2
+              variants={fadeUp}
+              className="text-[32px] md:text-[48px] leading-none tracking-tight uppercase font-medium text-ink"
+            >
+              Nasze restauracje i hotele
+            </motion.h2>
+          </motion.div>
+        </div>
+
+        {/* Cards — start at container left edge, bleed right */}
+        <div
+          className="flex gap-[3px] overflow-x-auto no-scrollbar pb-16 px-6 md:px-[48px] lg:px-[64px]"
+          style={{ scrollSnapType: "x mandatory" }}
+        >
+          {ecosystem.map(({ name, type, address, instagram, bg }, i) => (
+            <motion.div
+              key={name}
+              initial={{ opacity: 0, x: 32 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.55, ease, delay: i * 0.07 }}
+              className="shrink-0 flex flex-col group cursor-pointer"
+              style={{
+                width: "clamp(240px, 28vw, 380px)",
+                scrollSnapAlign: "start",
+              }}
+            >
+              {/* Photo placeholder — will be replaced with real photos */}
+              <div
+                className="w-full"
+                style={{ aspectRatio: "3/4", background: bg }}
+              />
+
+              {/* Info bar */}
+              <div className="flex items-start justify-between gap-3 pt-4">
+                <div>
+                  <p
+                    className="font-display font-normal leading-none tracking-tight text-ink uppercase"
+                    style={{ fontSize: "clamp(20px, 2vw, 30px)" }}
+                  >
+                    {name}
+                  </p>
+                  <p className="text-[12px] leading-none uppercase tracking-widest font-normal text-muted mt-2">
+                    {type}
+                  </p>
+                  <p className="text-[13px] font-normal leading-none text-muted mt-1.5">
+                    {address}
+                  </p>
+                </div>
+                <a
+                  href={`https://instagram.com/${instagram}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="shrink-0 text-muted hover:text-ink transition-colors duration-200 mt-0.5"
+                  aria-label={`Instagram ${name}`}
                 >
-                  {/* Dot + line */}
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-2 h-2 rounded-full bg-ink shrink-0" />
-                    {i < timeline.length - 1 && (
-                      <div className="hidden md:block absolute top-[3px] left-[calc(100%-1px)] right-0 h-px bg-muted" />
-                    )}
-                  </div>
-                  <p className="font-serif text-2xl tracking-tight text-muted mb-2">{year}</p>
-                  <p className="text-sm text-ink font-medium mb-1">{title}</p>
-                  <p className="text-xs text-muted leading-relaxed">{desc}</p>
-                </motion.div>
-              ))}
+                  <InstagramIcon />
+                </a>
+              </div>
             </motion.div>
-          </div>
+          ))}
+          {/* Trailing spacer so last card isn't flush against edge on snap */}
+          <div className="shrink-0 w-6 md:w-12" />
         </div>
       </section>
 
-      {/* ── TEAM ─────────────────────────────────────────────────── */}
+      {/* TEAM */}
       <section className="border-b border-muted">
-        <div className="max-w-layout mx-auto px-8 md:px-16 py-20 md:py-28">
-          <motion.div initial="hidden" whileInView="show" viewport={VP} variants={stagger} className="mb-14">
-            <motion.p variants={fadeUp} className="text-[11px] uppercase tracking-[0.2em] text-muted mb-4">Ludzie</motion.p>
-            <motion.h2 variants={fadeUp} className="font-serif tracking-tight text-ink" style={{ fontSize: "clamp(34px, 4vw, 52px)" }}>
+        <div className={`${SITE_CONTAINER} py-20 md:py-28`}>
+          <motion.div
+            initial="hidden"
+            whileInView="show"
+            viewport={VP}
+            variants={stagger}
+            className="mb-14"
+          >
+            <motion.p
+              variants={fadeUp}
+              className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-4"
+            >
+              Ludzie
+            </motion.p>
+            <motion.h2
+              variants={fadeUp}
+              className="text-[32px] md:text-[48px] leading-none tracking-tight uppercase font-medium text-ink"
+            >
               Nasz zespół
             </motion.h2>
           </motion.div>
@@ -159,15 +295,21 @@ export default function ONas() {
           >
             {team.map(({ name, role, desc, contact }) => (
               <motion.div key={name} variants={fadeUp} className="bg-bg p-8 md:p-10">
-                {/* Image placeholder */}
                 <div className="w-full aspect-square bg-sage/20 mb-6 overflow-hidden max-w-[200px]">
                   <div className="w-full h-full bg-gradient-to-br from-sage/10 to-sage/25" />
                 </div>
-                <p className="text-[10px] uppercase tracking-[0.2em] text-muted mb-2">{role}</p>
-                <h3 className="font-serif text-2xl tracking-tight text-ink mb-3">{name}</h3>
+                <p className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-2">
+                  {role}
+                </p>
+                <h3 className="text-[20px] md:text-[26px] leading-snug font-medium text-ink mb-3">
+                  {name}
+                </h3>
                 <p className="text-sm text-muted leading-relaxed mb-4">{desc}</p>
                 {contact && (
-                  <a href={`mailto:${contact}`} className="text-xs text-muted hover:text-ink transition-colors break-all">
+                  <a
+                    href={`mailto:${contact}`}
+                    className="text-xs text-muted hover:text-ink transition-colors break-all"
+                  >
                     {contact}
                   </a>
                 )}
@@ -177,87 +319,26 @@ export default function ONas() {
         </div>
       </section>
 
-      {/* ── WYRÓŻNIKI / MISJA ────────────────────────────────────── */}
-      <section className="border-b border-muted">
-        <div className="max-w-layout mx-auto px-8 md:px-16 py-20 md:py-28">
-          <motion.div initial="hidden" whileInView="show" viewport={VP} variants={stagger} className="mb-14">
-            <motion.p variants={fadeUp} className="text-[11px] uppercase tracking-[0.2em] text-muted mb-4">Wyróżniki</motion.p>
-            <motion.h2 variants={fadeUp} className="font-serif tracking-tight text-ink max-w-2xl" style={{ fontSize: "clamp(34px, 4vw, 52px)" }}>
-              Squarestate w liczbach
-            </motion.h2>
-          </motion.div>
-
-          <motion.div
-            initial="hidden"
-            whileInView="show"
-            viewport={VP}
-            variants={stagger}
-            className="grid grid-cols-1 md:grid-cols-3 gap-px bg-muted"
-          >
-            {values.map(({ num, label, desc }) => (
-              <motion.div key={num} variants={fadeUp} className="bg-bg p-8 md:p-10">
-                <p className="font-serif tracking-tight text-ink leading-none mb-4" style={{ fontSize: "clamp(48px, 5.5vw, 72px)" }}>
-                  {num}
-                </p>
-                <p className="text-[10px] uppercase tracking-[0.2em] text-muted mb-3">{label}</p>
-                <p className="text-sm text-muted leading-relaxed">{desc}</p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ── EKOSYSTEM ────────────────────────────────────────────── */}
-      <section className="border-b border-muted">
-        <div className="max-w-layout mx-auto px-8 md:px-16 py-20 md:py-28">
-          <motion.div initial="hidden" whileInView="show" viewport={VP} variants={stagger} className="mb-14">
-            <motion.p variants={fadeUp} className="text-[11px] uppercase tracking-[0.2em] text-muted mb-4">Ekosystem</motion.p>
-            <motion.h2 variants={fadeUp} className="font-serif tracking-tight text-ink max-w-xl" style={{ fontSize: "clamp(34px, 4vw, 52px)" }}>
-              Nasze restauracje i hotele
-            </motion.h2>
-            <motion.p variants={fadeUp} className="mt-5 text-muted max-w-md leading-relaxed">
-              Squarestate to część większego ekosystemu gościnności w Krakowie.
-            </motion.p>
-          </motion.div>
-
-          <motion.div
-            initial="hidden"
-            whileInView="show"
-            viewport={VP}
-            variants={stagger}
-            className="grid grid-cols-2 md:grid-cols-5 gap-px bg-muted"
-          >
-            {ecosystem.map(({ name, type }) => (
-              <motion.div
-                key={name}
-                variants={fadeUp}
-                className="bg-bg p-6 md:p-8 flex flex-col items-center justify-center text-center group hover:bg-[#f5f5f2] transition-colors cursor-default"
-              >
-                <div className="w-12 h-12 border border-muted flex items-center justify-center mb-4 group-hover:border-ink transition-colors">
-                  <span className="text-[10px] uppercase tracking-[0.15em] text-muted">logo</span>
-                </div>
-                <p className="font-serif text-base tracking-tight text-ink">{name}</p>
-                <p className="text-[10px] uppercase tracking-[0.2em] text-muted mt-1">{type}</p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ── CTA ──────────────────────────────────────────────────── */}
+      {/* CTA */}
       <section>
         <motion.div
           initial="hidden"
           whileInView="show"
           viewport={VP}
           variants={stagger}
-          className="max-w-layout mx-auto px-8 md:px-16 py-24 flex flex-col md:flex-row items-start md:items-end justify-between gap-8"
+          className={`${SITE_CONTAINER} py-24 flex flex-col md:flex-row items-start md:items-end justify-between gap-8`}
         >
-          <motion.h2 variants={fadeUp} className="font-serif tracking-tight text-ink max-w-lg" style={{ fontSize: "clamp(34px, 4vw, 52px)" }}>
+          <motion.h2
+            variants={fadeUp}
+            className="text-[32px] md:text-[48px] leading-none tracking-tight uppercase font-medium text-ink max-w-lg"
+          >
             Chcesz dołączyć do ekosystemu?
           </motion.h2>
           <motion.div variants={fadeUp}>
-            <Link href="/kontakt" className="inline-block px-8 py-3.5 bg-ink text-bg text-[11px] uppercase tracking-[0.2em] hover:bg-sage transition-colors whitespace-nowrap">
+            <Link
+              href="/kontakt"
+              className="inline-block px-8 py-3.5 bg-ink text-bg text-[13px] leading-none uppercase tracking-widest font-normal hover:bg-sage transition-colors whitespace-nowrap"
+            >
               Skontaktuj się
             </Link>
           </motion.div>

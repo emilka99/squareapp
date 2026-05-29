@@ -84,7 +84,7 @@ function FaqMiniItem({ q, a }: { q: string; a: string }) {
             transition={{ duration: 0.28, ease: [0.25, 0.1, 0.25, 1] }}
             className="overflow-hidden"
           >
-            <p className="pb-4 text-sm text-muted leading-relaxed">{a}</p>
+            <p className="pb-4 text-sm text-ink leading-relaxed">{a}</p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -124,7 +124,7 @@ export default function Kontakt() {
     <>
       {/* ── TWO-COLUMN HERO ──────────────────────────────────────── */}
       <section className="border-b border-muted">
-        <div className="max-w-layout mx-auto px-8 md:px-16 py-20 md:py-28">
+        <div className="max-w-layout mx-auto px-6 md:px-[48px] lg:px-[64px] py-20 md:py-28">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
             {/* Left: headings */}
             <motion.div
@@ -132,29 +132,15 @@ export default function Kontakt() {
               animate="show"
               variants={{ hidden: {}, show: { transition: { staggerChildren: 0.09 } } }}
             >
-              <motion.p
-                variants={fadeUp}
-                className="text-[11px] uppercase tracking-[0.2em] text-muted mb-6"
-              >
-                Strefa klienta
-              </motion.p>
               <motion.h1
                 variants={fadeUp}
-                className="font-serif tracking-tight text-ink leading-[1.04]"
-                style={{ fontSize: "clamp(44px, 5.5vw, 72px)" }}
+                className="text-[40px] md:text-[64px] leading-none tracking-tight uppercase font-medium text-ink"
               >
-                Dodaj mieszkanie
+                Skontaktuj się
               </motion.h1>
               <motion.p
                 variants={fadeUp}
-                className="mt-2 font-serif tracking-tight text-muted leading-none"
-                style={{ fontSize: "clamp(32px, 3.5vw, 52px)" }}
-              >
-                Skontaktuj się
-              </motion.p>
-              <motion.p
-                variants={fadeUp}
-                className="mt-8 text-muted leading-relaxed max-w-sm"
+                className="mt-8 text-[18px] font-light leading-[1.6] text-ink max-w-sm"
               >
                 Bezpłatna konsultacja i wycena potencjału Twojego mieszkania.
                 Odpiszemy w ciągu 24 godzin.
@@ -169,20 +155,19 @@ export default function Kontakt() {
               className="flex flex-col gap-8"
             >
               <motion.div variants={fadeUp}>
-                <p className="text-[10px] uppercase tracking-[0.2em] text-muted mb-3">
+                <p className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-3">
                   Email
                 </p>
                 <a
                   href="mailto:hello@squarestate.pl"
-                  className="font-serif tracking-tight text-ink hover:text-sage transition-colors"
-                  style={{ fontSize: "clamp(20px, 2vw, 28px)" }}
+                  className="tracking-tight text-ink hover:text-sage transition-colors"
                 >
                   hello@squarestate.pl
                 </a>
               </motion.div>
 
               <motion.div variants={fadeUp} className="pt-8 border-t border-muted">
-                <p className="text-[10px] uppercase tracking-[0.2em] text-muted mb-3">
+                <p className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-3">
                   Biuro
                 </p>
                 <p className="text-sm text-ink leading-relaxed">
@@ -193,24 +178,24 @@ export default function Kontakt() {
               </motion.div>
 
               <motion.div variants={fadeUp} className="pt-8 border-t border-muted">
-                <p className="text-[10px] uppercase tracking-[0.2em] text-muted mb-5">
+                <p className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-5">
                   Kontakt bezpośredni
                 </p>
                 {contactPersons.map(({ role, name, phone, email }) => (
                   <div key={name} className="mb-6 last:mb-0">
-                    <p className="text-[10px] uppercase tracking-[0.2em] text-muted mb-1">
+                    <p className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-1">
                       {role}
                     </p>
                     <p className="text-sm text-ink font-medium mb-0.5">{name}</p>
                     <a
                       href={`tel:${phone.replace(/\s/g, "")}`}
-                      className="block text-sm text-muted hover:text-ink transition-colors"
+                      className="block text-sm text-ink hover:text-sage transition-colors"
                     >
                       {phone}
                     </a>
                     <a
                       href={`mailto:${email}`}
-                      className="block text-sm text-muted hover:text-ink transition-colors break-all"
+                      className="block text-sm text-ink hover:text-sage transition-colors break-all"
                     >
                       {email}
                     </a>
@@ -224,7 +209,7 @@ export default function Kontakt() {
 
       {/* ── CONTACT FORM ─────────────────────────────────────────── */}
       <section className="border-b border-muted">
-        <div className="max-w-layout mx-auto px-8 md:px-16 py-20 md:py-28">
+        <div className="max-w-layout mx-auto px-6 md:px-[48px] lg:px-[64px] py-20 md:py-28">
           <motion.div
             initial="hidden"
             whileInView="show"
@@ -234,14 +219,14 @@ export default function Kontakt() {
           >
             <motion.p
               variants={fadeUp}
-              className="text-[11px] uppercase tracking-[0.2em] text-muted mb-4"
+              className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-4"
             >
               Formularz
             </motion.p>
             <motion.h2
               variants={fadeUp}
-              className="font-serif tracking-tight text-ink mb-12"
-              style={{ fontSize: "clamp(30px, 3.5vw, 48px)" }}
+              className="tracking-tight text-ink mb-12"
+              
             >
               Napisz do nas
             </motion.h2>
@@ -255,7 +240,7 @@ export default function Kontakt() {
                   transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                   className="py-16 border border-muted text-center px-8"
                 >
-                  <p className="font-serif text-3xl tracking-tight text-ink mb-3">
+                  <p className="text-[20px] md:text-[26px] leading-snug font-medium text-ink mb-3">
                     Dziękujemy!
                   </p>
                   <p className="text-muted">
@@ -282,7 +267,7 @@ export default function Kontakt() {
                     <div key={key} className="border-b border-muted py-4">
                       <label
                         className={clsx(
-                          "block text-[10px] uppercase tracking-[0.2em] mb-2 transition-colors",
+                          "block text-[13px] leading-none uppercase tracking-widest font-normal mb-2 transition-colors",
                           focused === key ? "text-ink" : "text-muted"
                         )}
                       >
@@ -293,7 +278,7 @@ export default function Kontakt() {
                         type={type}
                         required={required}
                         {...field(key)}
-                        className="w-full bg-transparent text-ink text-base placeholder:text-muted focus:outline-none"
+                        className="w-full bg-transparent text-ink text-[18px] leading-[1.55] font-light placeholder:text-muted focus:outline-none"
                         placeholder="—"
                       />
                     </div>
@@ -303,7 +288,7 @@ export default function Kontakt() {
                   <div className="border-b border-muted py-4">
                     <label
                       className={clsx(
-                        "block text-[10px] uppercase tracking-[0.2em] mb-2 transition-colors",
+                        "block text-[13px] leading-none uppercase tracking-widest font-normal mb-2 transition-colors",
                         focused === "message" ? "text-ink" : "text-muted"
                       )}
                     >
@@ -312,7 +297,7 @@ export default function Kontakt() {
                     <textarea
                       rows={4}
                       {...field("message")}
-                      className="w-full bg-transparent text-ink text-base placeholder:text-muted focus:outline-none resize-none"
+                      className="w-full bg-transparent text-ink text-[18px] leading-[1.55] font-light placeholder:text-muted focus:outline-none resize-none"
                       placeholder="—"
                     />
                   </div>
@@ -320,7 +305,7 @@ export default function Kontakt() {
                   <div className="pt-8">
                     <button
                       type="submit"
-                      className="px-8 py-3.5 bg-ink text-bg text-[11px] uppercase tracking-[0.2em] hover:bg-sage transition-colors"
+                      className="px-8 py-3.5 bg-ink text-bg text-[13px] leading-none uppercase tracking-widest font-normal hover:bg-sage transition-colors"
                     >
                       Wyślij wiadomość
                     </button>
@@ -335,33 +320,27 @@ export default function Kontakt() {
         </div>
       </section>
 
-      {/* ── MAP PLACEHOLDER ──────────────────────────────────────── */}
+      {/* ── MAP IMAGE ────────────────────────────────────────────── */}
       <section className="border-b border-muted">
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={VP}
           transition={{ duration: 0.8 }}
-          className="w-full bg-sage/15 flex items-center justify-center"
-          style={{ height: "clamp(240px, 28vw, 420px)" }}
+          className="w-full overflow-hidden"
+          style={{ aspectRatio: "16/6" }}
         >
-          <div className="text-center">
-            <p
-              className="font-serif tracking-tight text-muted/60"
-              style={{ fontSize: "clamp(18px, 2vw, 24px)" }}
-            >
-              Kraków, Małopolska
-            </p>
-            <p className="text-[11px] uppercase tracking-[0.2em] text-muted/40 mt-2">
-              ul. Dietla 80/5 · 31-031 Kraków
-            </p>
-          </div>
+          <img
+            src="/assets/map-krakow.png"
+            alt="Mapa Kraków — ul. Dietla 80/5"
+            className="w-full h-full object-cover object-center"
+          />
         </motion.div>
       </section>
 
       {/* ── FAQ MINI ─────────────────────────────────────────────── */}
       <section className="border-b border-muted">
-        <div className="max-w-layout mx-auto px-8 md:px-16 py-20 md:py-28">
+        <div className="max-w-layout mx-auto px-6 md:px-[48px] lg:px-[64px] py-20 md:py-28">
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-16">
             <div>
               <motion.p
@@ -369,7 +348,7 @@ export default function Kontakt() {
                 whileInView="show"
                 viewport={VP}
                 variants={fadeUp}
-                className="text-[11px] uppercase tracking-[0.2em] text-muted mb-4"
+                className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-4"
               >
                 FAQ
               </motion.p>
@@ -378,8 +357,7 @@ export default function Kontakt() {
                 whileInView="show"
                 viewport={VP}
                 variants={fadeUp}
-                className="font-serif tracking-tight text-ink"
-                style={{ fontSize: "clamp(28px, 3vw, 42px)" }}
+                className="tracking-tight text-ink"
               >
                 Najczęstsze pytania
               </motion.h2>

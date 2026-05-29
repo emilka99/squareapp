@@ -20,18 +20,50 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2,
+.font-display {
+  font-family: var(--font-display), var(--font-lato), sans-serif;
+  letter-spacing: -0.02em;
+}
+
+h3, h4, h5, h6 {
   font-family: var(--font-lato), sans-serif;
   letter-spacing: -0.02em;
 }
 
-button,
-a[class*="py-3"] {
-  font-weight: 700;
+
+/* Square thumb for range inputs */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  background: #14151a;
+  border-radius: 0;
+  cursor: pointer;
+  margin-top: -5px;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  background: #14151a;
+  border-radius: 0;
+  border: none;
+  cursor: pointer;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 1px;
+  background: #b3bbbd;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
   }
 }
