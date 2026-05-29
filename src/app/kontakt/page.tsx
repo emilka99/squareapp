@@ -39,7 +39,7 @@ const contactPersons = [
 const miniFaq = [
   {
     q: "Ile zarobię na moim mieszkaniu?",
-    a: "Przychód zależy od lokalizacji, metrażu i standardu. Dla typowego 50m² na Kazimierzu szacujemy 5–8 tys. PLN miesięcznie. Użyj kalkulatora na stronie głównej lub zadzwoń po indywidualną wycenę.",
+    a: "Przychód zależy od lokalizacji, metrażu i standardu. Dla typowego 50m² na Kazimierzu szacujemy 5–8 tys. PLN miesięcznie. Wypełnij formularz lub zadzwoń po indywidualną wycenę.",
   },
   {
     q: "Jak szybko mogę zacząć zarabiać?",

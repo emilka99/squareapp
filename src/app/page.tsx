@@ -31,28 +31,6 @@ const VP = { once: true, margin: "-100px" } as const;
 
 /* ─── hooks ───────────────────────────────────────────────────── */
 
-function useAnimatedNumber(target: number) {
-  const [display, setDisplay] = useState(target);
-  const prev = useRef(target);
-  const rafId = useRef(0);
-  useEffect(() => {
-    const from = prev.current;
-    const to = target;
-    const dur = 700;
-    let t0: number | null = null;
-    function step(now: number) {
-      if (t0 === null) t0 = now;
-      const p = Math.min((now - t0) / dur, 1);
-      const e = p === 1 ? 1 : 1 - Math.pow(2, -10 * p);
-      setDisplay(Math.round(from + (to - from) * e));
-      if (p < 1) rafId.current = requestAnimationFrame(step);
-    }
-    rafId.current = requestAnimationFrame(step);
-    prev.current = target;
-    return () => cancelAnimationFrame(rafId.current);
-  }, [target]);
-  return display;
-}
 
 /* ─── data ────────────────────────────────────────────────────── */
 
@@ -112,10 +90,6 @@ const standardOptions = [
   { key: "premium",    label: "Premium",     desc: "Luksusowy design, zdjęcia pro, top oferta", mul: 1.35 },
 ];
 
-function calcIncome(size: number, loc: string, std: string) {
-  const mul = standardOptions.find((o) => o.key === std)?.mul ?? 1;
-  return Math.round(85 * size * (locationMul[loc] ?? 1) * mul);
-}
 
 const testimonials = [
   {
@@ -442,8 +416,8 @@ export default function Home() {
   const [loc, setLoc] = useState("Stare Miasto");
   const [size, setSize] = useState(60);
   const [std, setStd] = useState("dobry");
-  const income = calcIncome(size, loc, std);
-  const displayIncome = useAnimatedNumber(income);
+  const [calcPhone, setCalcPhone] = useState("");
+  const [calcEmail, setCalcEmail] = useState("");
 
   return (
     <>
@@ -621,7 +595,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── 5. KALKULATOR ───────────────────────────────────────── */}
+      {/* ── 5. DODAJ MIESZKANIE ──────────────────────────────────── */}
       <section className="relative overflow-hidden">
         {/* Background image — blurred */}
         <div className="absolute inset-0 overflow-hidden">
@@ -666,7 +640,7 @@ export default function Home() {
               className="p-8 md:p-10 bg-white"
             >
               <p className="text-[13px] leading-none uppercase tracking-widest font-normal text-ink/50 mb-8">
-                Kalkulator przychodów
+                Dodaj mieszkanie
               </p>
 
               <div className="space-y-7">
@@ -745,26 +719,32 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Output */}
-              <div className="mt-8 pt-8 border-t border-ink/10">
-                <p className="text-[13px] leading-none uppercase tracking-widest font-normal text-ink/50 mb-3">
-                  Szacunkowy przychód miesięcznie
-                </p>
-                <p
-                  className="font-medium tracking-tight text-ink leading-none"
-                  style={{ fontSize: "clamp(56px, 6vw, 88px)" }}
-                >
-                  {displayIncome.toLocaleString("pl-PL")}
-                  <span
-                    className="text-ink/40 ml-2"
-                    style={{ fontSize: "clamp(20px, 2vw, 28px)" }}
-                  >
-                    PLN
-                  </span>
-                </p>
-                <p className="text-[13px] leading-snug font-normal text-ink/40 mt-2 mb-8">
-                  * szacunek orientacyjny przy 90% obłożeniu
-                </p>
+              {/* Contact fields */}
+              <div className="mt-8 pt-8 border-t border-ink/10 space-y-0">
+                <div className="border-b border-ink/10 py-4">
+                  <label className="block text-[11px] leading-none uppercase tracking-widest font-normal text-ink/40 mb-2.5">
+                    Telefon
+                  </label>
+                  <input
+                    type="tel"
+                    value={calcPhone}
+                    onChange={(e) => setCalcPhone(e.target.value)}
+                    placeholder="+48 000 000 000"
+                    className="w-full bg-transparent text-[18px] font-light text-ink focus:outline-none placeholder:text-ink/20"
+                  />
+                </div>
+                <div className="border-b border-ink/10 py-4 mb-8">
+                  <label className="block text-[11px] leading-none uppercase tracking-widest font-normal text-ink/40 mb-2.5">
+                    E-mail
+                  </label>
+                  <input
+                    type="email"
+                    value={calcEmail}
+                    onChange={(e) => setCalcEmail(e.target.value)}
+                    placeholder="jan@example.com"
+                    className="w-full bg-transparent text-[18px] font-light text-ink focus:outline-none placeholder:text-ink/20"
+                  />
+                </div>
                 <Link
                   href="/kontakt"
                   className="block w-full text-center px-8 py-4 bg-ink text-bg text-[13px] leading-none uppercase tracking-widest font-normal hover:bg-sage transition-colors"
