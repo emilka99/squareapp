@@ -46,7 +46,8 @@ export default function Footer() {
       el.style.fontSize = "100px";
       const natural = el.scrollWidth;
       const available = wrap.offsetWidth;
-      if (natural > 0) el.style.fontSize = `${(available / natural) * 100}px`;
+      // 0.7 = scaled down 30% from the original full-bleed fit
+      if (natural > 0) el.style.fontSize = `${(available / natural) * 100 * 0.7}px`;
     };
     fit();
     const ro = new ResizeObserver(fit);
@@ -66,7 +67,7 @@ export default function Footer() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.75, ease: [0.25, 0.1, 0.25, 1] }}
-            className="font-display block font-medium tracking-tight text-ink leading-none uppercase whitespace-nowrap hover:text-sage transition-colors duration-300"
+            className="font-display block text-center font-medium tracking-tight text-ink leading-none uppercase whitespace-nowrap hover:text-sage transition-colors duration-300"
           >
             HELLO@SQUARESTATE.PL
           </motion.a>
