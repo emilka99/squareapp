@@ -125,8 +125,8 @@ export default function Kontakt() {
     <>
       {/* ── TWO-COLUMN HERO ──────────────────────────────────────── */}
       <section className="border-b border-muted">
-        <div className="max-w-layout mx-auto px-6 md:px-[48px] lg:px-[64px] py-20 md:py-28">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
+        <div className="max-w-layout mx-auto px-6 md:px-[48px] lg:px-[64px] py-12 md:py-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
             {/* Left: headings */}
             <motion.div
               initial="hidden"
@@ -141,11 +141,27 @@ export default function Kontakt() {
               </motion.h1>
               <motion.p
                 variants={fadeUp}
-                className="mt-8 text-[18px] font-light leading-[1.6] text-ink max-w-sm"
+                className="mt-6 text-[18px] font-light leading-[1.6] text-ink max-w-sm"
               >
                 Bezpłatna konsultacja i wycena potencjału Twojego mieszkania.
                 Odpiszemy w ciągu 24 godzin.
               </motion.p>
+
+              {/* Quick contact actions — high visibility */}
+              <motion.div variants={fadeUp} className="mt-8 flex flex-wrap gap-3">
+                <a
+                  href={`tel:${contactPersons[0].phone.replace(/\s/g, "")}`}
+                  className="inline-block px-8 py-3.5 bg-ink text-bg text-[13px] leading-none uppercase tracking-widest font-normal hover:bg-sage transition-colors"
+                >
+                  Zadzwoń teraz
+                </a>
+                <a
+                  href="mailto:hello@squarestate.pl"
+                  className="inline-block px-8 py-3.5 border border-ink text-ink text-[13px] leading-none uppercase tracking-widest font-normal hover:bg-ink hover:text-bg transition-colors"
+                >
+                  Napisz email
+                </a>
+              </motion.div>
             </motion.div>
 
             {/* Right: contact details */}
@@ -153,7 +169,7 @@ export default function Kontakt() {
               initial="hidden"
               animate="show"
               variants={{ hidden: {}, show: { transition: { staggerChildren: 0.1, delayChildren: 0.2 } } }}
-              className="flex flex-col gap-8"
+              className="flex flex-col gap-6"
             >
               <motion.div variants={fadeUp}>
                 <p className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-3">
@@ -161,13 +177,13 @@ export default function Kontakt() {
                 </p>
                 <a
                   href="mailto:hello@squarestate.pl"
-                  className="tracking-tight text-ink hover:text-sage transition-colors"
+                  className="text-[22px] md:text-[26px] leading-snug font-medium tracking-tight text-ink hover:text-sage transition-colors"
                 >
                   hello@squarestate.pl
                 </a>
               </motion.div>
 
-              <motion.div variants={fadeUp} className="pt-8 border-t border-muted">
+              <motion.div variants={fadeUp} className="pt-6 border-t border-muted">
                 <p className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-3">
                   Biuro
                 </p>
@@ -178,30 +194,32 @@ export default function Kontakt() {
                 </p>
               </motion.div>
 
-              <motion.div variants={fadeUp} className="pt-8 border-t border-muted">
-                <p className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-5">
+              <motion.div variants={fadeUp} className="pt-6 border-t border-muted">
+                <p className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-4">
                   Kontakt bezpośredni
                 </p>
-                {contactPersons.map(({ role, name, phone, email }) => (
-                  <div key={name} className="mb-6 last:mb-0">
-                    <p className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-1">
-                      {role}
-                    </p>
-                    <p className="text-sm text-ink font-medium mb-0.5">{name}</p>
-                    <a
-                      href={`tel:${phone.replace(/\s/g, "")}`}
-                      className="block text-sm text-ink hover:text-sage transition-colors"
-                    >
-                      {phone}
-                    </a>
-                    <a
-                      href={`mailto:${email}`}
-                      className="block text-sm text-ink hover:text-sage transition-colors break-all"
-                    >
-                      {email}
-                    </a>
-                  </div>
-                ))}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  {contactPersons.map(({ role, name, phone, email }) => (
+                    <div key={name}>
+                      <p className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-1">
+                        {role}
+                      </p>
+                      <p className="text-sm text-ink font-medium mb-0.5">{name}</p>
+                      <a
+                        href={`tel:${phone.replace(/\s/g, "")}`}
+                        className="block text-[16px] font-medium text-ink hover:text-sage transition-colors"
+                      >
+                        {phone}
+                      </a>
+                      <a
+                        href={`mailto:${email}`}
+                        className="block text-sm text-ink hover:text-sage transition-colors break-all"
+                      >
+                        {email}
+                      </a>
+                    </div>
+                  ))}
+                </div>
               </motion.div>
             </motion.div>
           </div>
@@ -210,7 +228,7 @@ export default function Kontakt() {
 
       {/* ── CONTACT FORM ─────────────────────────────────────────── */}
       <section className="border-b border-muted">
-        <div className="max-w-layout mx-auto px-6 md:px-[48px] lg:px-[64px] py-20 md:py-28">
+        <div className="max-w-layout mx-auto px-6 md:px-[48px] lg:px-[64px] py-12 md:py-16">
           <motion.div
             initial="hidden"
             whileInView="show"
@@ -220,14 +238,14 @@ export default function Kontakt() {
           >
             <motion.p
               variants={fadeUp}
-              className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-4"
+              className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-3"
             >
               Formularz
             </motion.p>
             <motion.h2
               variants={fadeUp}
-              className="tracking-tight text-ink mb-12"
-              
+              className="tracking-tight text-ink mb-8"
+
             >
               Napisz do nas
             </motion.h2>
@@ -265,7 +283,7 @@ export default function Kontakt() {
                       { key: "size" as Field, label: "Metraż (m²)", type: "number", required: false },
                     ] as { key: Field; label: string; type: string; required: boolean }[]
                   ).map(({ key, label, type, required }) => (
-                    <div key={key} className="border-b border-muted py-4">
+                    <div key={key} className="border-b border-muted py-3">
                       <label
                         className={clsx(
                           "block text-[13px] leading-none uppercase tracking-widest font-normal mb-2 transition-colors",
@@ -286,7 +304,7 @@ export default function Kontakt() {
                   ))}
 
                   {/* Message */}
-                  <div className="border-b border-muted py-4">
+                  <div className="border-b border-muted py-3">
                     <label
                       className={clsx(
                         "block text-[13px] leading-none uppercase tracking-widest font-normal mb-2 transition-colors",
@@ -296,14 +314,14 @@ export default function Kontakt() {
                       Wiadomość
                     </label>
                     <textarea
-                      rows={4}
+                      rows={3}
                       {...field("message")}
                       className="w-full bg-transparent text-ink text-[18px] leading-[1.55] font-light placeholder:text-muted focus:outline-none resize-none"
                       placeholder="—"
                     />
                   </div>
 
-                  <div className="pt-8">
+                  <div className="pt-6">
                     <button
                       type="submit"
                       className="px-8 py-3.5 bg-ink text-bg text-[13px] leading-none uppercase tracking-widest font-normal hover:bg-sage transition-colors"
@@ -329,7 +347,7 @@ export default function Kontakt() {
           viewport={VP}
           transition={{ duration: 0.8 }}
           className="w-full overflow-hidden"
-          style={{ aspectRatio: "16/6" }}
+          style={{ aspectRatio: "21/5" }}
         >
           <img
             src={asset("/assets/map-krakow.png")}
@@ -341,8 +359,8 @@ export default function Kontakt() {
 
       {/* ── FAQ MINI ─────────────────────────────────────────────── */}
       <section className="border-b border-muted">
-        <div className="max-w-layout mx-auto px-6 md:px-[48px] lg:px-[64px] py-20 md:py-28">
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-16">
+        <div className="max-w-layout mx-auto px-6 md:px-[48px] lg:px-[64px] py-12 md:py-16">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-12">
             <div>
               <motion.p
                 initial="hidden"
