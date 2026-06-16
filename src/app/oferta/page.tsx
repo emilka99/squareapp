@@ -77,7 +77,7 @@ export default function Oferta() {
   return (
     <>
       <PageHeader
-        imageSrc="/assets/4image.png"
+        imageSrc={asset("/assets/4image.png")}
         imageAlt="Squarestate — oferta zarządzania najmem"
         className="border-b border-muted"
         pageLabel="Oferta"

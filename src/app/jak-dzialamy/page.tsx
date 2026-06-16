@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion, AnimatePresence, type Variants } from "framer-motion";
 import PageHeader from "@/components/PageHeader";
 import { SITE_CONTAINER, SITE_X_PADDING } from "@/lib/layout";
+import { asset } from "@/lib/asset";
 
 // ── ANIMATIONS ────────────────────────────────────────────────
 const fadeUp: Variants = {
@@ -169,7 +170,7 @@ export default function JakDzialamy() {
     <>
       {/* 1. PAGE HEADER */}
       <PageHeader
-        imageSrc="/assets/6image.png"
+        imageSrc={asset("/assets/6image.png")}
         imageAlt="Jak działamy — Squarestate"
         className="border-b border-muted"
       />
