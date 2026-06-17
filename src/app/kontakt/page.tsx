@@ -71,7 +71,7 @@ function FaqMiniItem({ q, a }: { q: string; a: string }) {
         <motion.span
           animate={{ rotate: open ? 45 : 0 }}
           transition={{ duration: 0.2 }}
-          className="shrink-0 text-xl text-muted leading-none mt-0.5 select-none"
+          className="shrink-0 text-xl text-ink leading-none mt-0.5 select-none"
         >
           +
         </motion.span>
@@ -172,7 +172,7 @@ export default function Kontakt() {
               className="flex flex-col gap-6"
             >
               <motion.div variants={fadeUp}>
-                <p className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-3">
+                <p className="text-[13px] leading-none uppercase tracking-widest font-normal text-ink mb-3">
                   Email
                 </p>
                 <a
@@ -184,7 +184,7 @@ export default function Kontakt() {
               </motion.div>
 
               <motion.div variants={fadeUp} className="pt-6 border-t border-muted">
-                <p className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-3">
+                <p className="text-[13px] leading-none uppercase tracking-widest font-normal text-ink mb-3">
                   Biuro
                 </p>
                 <p className="text-sm text-ink leading-relaxed">
@@ -195,13 +195,13 @@ export default function Kontakt() {
               </motion.div>
 
               <motion.div variants={fadeUp} className="pt-6 border-t border-muted">
-                <p className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-4">
+                <p className="text-[13px] leading-none uppercase tracking-widest font-normal text-ink mb-4">
                   Kontakt bezpośredni
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   {contactPersons.map(({ role, name, phone, email }) => (
                     <div key={name}>
-                      <p className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-1">
+                      <p className="text-[13px] leading-none uppercase tracking-widest font-normal text-ink mb-1">
                         {role}
                       </p>
                       <p className="text-sm text-ink font-medium mb-0.5">{name}</p>
@@ -238,7 +238,7 @@ export default function Kontakt() {
           >
             <motion.p
               variants={fadeUp}
-              className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-3"
+              className="text-[13px] leading-none uppercase tracking-widest font-normal text-ink mb-3"
             >
               Formularz
             </motion.p>
@@ -262,7 +262,7 @@ export default function Kontakt() {
                   <p className="text-[20px] md:text-[26px] leading-snug font-medium text-ink mb-3">
                     Dziękujemy!
                   </p>
-                  <p className="text-muted">
+                  <p className="text-ink/70">
                     Odezwiemy się w ciągu 24 godzin.
                   </p>
                 </motion.div>
@@ -287,7 +287,7 @@ export default function Kontakt() {
                       <label
                         className={clsx(
                           "block text-[13px] leading-none uppercase tracking-widest font-normal mb-2 transition-colors",
-                          focused === key ? "text-ink" : "text-muted"
+                          focused === key ? "text-ink" : "text-ink/60"
                         )}
                       >
                         {label}
@@ -308,7 +308,7 @@ export default function Kontakt() {
                     <label
                       className={clsx(
                         "block text-[13px] leading-none uppercase tracking-widest font-normal mb-2 transition-colors",
-                        focused === "message" ? "text-ink" : "text-muted"
+                        focused === "message" ? "text-ink" : "text-ink/60"
                       )}
                     >
                       Wiadomość
@@ -328,7 +328,7 @@ export default function Kontakt() {
                     >
                       Wyślij wiadomość
                     </button>
-                    <p className="mt-4 text-[10px] text-muted">
+                    <p className="mt-4 text-[10px] text-ink/60">
                       * Pola obowiązkowe
                     </p>
                   </div>
@@ -367,7 +367,7 @@ export default function Kontakt() {
                 whileInView="show"
                 viewport={VP}
                 variants={fadeUp}
-                className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-4"
+                className="text-[13px] leading-none uppercase tracking-widest font-normal text-ink mb-4"
               >
                 FAQ
               </motion.p>
