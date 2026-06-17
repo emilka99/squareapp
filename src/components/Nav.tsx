@@ -160,14 +160,20 @@ export default function Nav() {
             ))}
           </nav>
 
-          {/* Right: email */}
-          <div className="hidden lg:flex items-center shrink-0 ml-auto">
+          {/* Right: CTA + email */}
+          <div className="hidden lg:flex items-center gap-5 shrink-0 ml-auto">
             <a
               href="mailto:hello@squarestate.pl"
               className="text-[11px] tracking-[0.1em] text-ink underline underline-offset-2 hover:text-sage transition-colors"
             >
               hello@squarestate.pl
             </a>
+            <Link
+              href="/dodaj-mieszkanie"
+              className="px-5 py-2.5 bg-sage text-bg text-[11px] tracking-[0.16em] uppercase font-normal hover:opacity-85 transition-opacity"
+            >
+              Dodaj mieszkanie
+            </Link>
           </div>
 
           {/* Mobile hamburger */}
@@ -232,7 +238,15 @@ export default function Nav() {
                     {label}
                   </Link>
                 ))}
-                <div className="pt-5 flex items-center justify-between">
+                <div className="pt-5 pb-1">
+                  <Link
+                    href="/dodaj-mieszkanie"
+                    className="block w-full text-center px-5 py-3 bg-sage text-bg text-[11px] tracking-[0.16em] uppercase font-normal"
+                  >
+                    Dodaj mieszkanie
+                  </Link>
+                </div>
+                <div className="pt-4 flex items-center justify-between">
                   <a
                     href="mailto:hello@squarestate.pl"
                     className="text-[11px] underline underline-offset-2 text-ink"
