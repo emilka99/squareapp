@@ -135,7 +135,7 @@ export default function Oferta() {
               className="flex items-stretch justify-center min-h-[360px] bg-bg"
             >
               <img
-                src={asset("/assets/5image.png")}
+                src={asset("/assets/building-corner.jpg")}
                 alt=""
                 className="w-[80%] object-contain object-top block"
               />
