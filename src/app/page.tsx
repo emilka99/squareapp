@@ -422,7 +422,7 @@ export default function Home() {
   return (
     <>
       {/* ── 1. HERO ─────────────────────────────────────────────── */}
-      <section className="grid grid-cols-1 lg:grid-cols-2 min-h-[calc(100vh-68px)] border-b border-muted overflow-hidden">
+      <section className="grid grid-cols-1 lg:grid-cols-2 min-h-[calc(75vh-68px)] border-b border-muted overflow-hidden">
         {/* Left: text */}
         <motion.div
           className="flex flex-col justify-center px-6 md:px-[48px] lg:px-[64px] lg:pr-16 py-16 lg:py-24 bg-bg"
