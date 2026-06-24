@@ -182,32 +182,36 @@ export default function JakDzialamy() {
           whileInView="show"
           viewport={VP}
           variants={stagger}
-          className={`${SITE_X_PADDING} max-w-[900px] mx-auto py-[80px] md:py-[120px]`}
+          className={`${SITE_X_PADDING} max-w-[900px] mx-auto py-10 md:py-14`}
         >
-          <motion.h1
-            variants={fadeUp}
-            className="text-[40px] md:text-[64px] leading-none tracking-tight uppercase font-medium text-ink mb-10 md:mb-14"
-          >
-            Jak działamy
-          </motion.h1>
-          <motion.p
-            variants={fadeUp}
-            className="font-light leading-snug text-ink mb-8 md:mb-10"
-            style={{ fontSize: "clamp(26px, 3.2vw, 48px)" }}
-          >
-            Przejmujemy Twoje mieszkanie w całości.
-            Ty nie musisz robić nic — my zajmujemy się wszystkim,
-            od przygotowania po comiesięczny przelew.
-          </motion.p>
-          <motion.p
-            variants={fadeUp}
-            className="text-[17px] md:text-[20px] leading-[1.6] font-light max-w-[640px]"
-            style={{ color: "#6e7780" }}
-          >
-            Pracujemy z właścicielami mieszkań w Krakowie od ponad 10 lat.
-            Wiemy, że najważniejsze są: spokój, przejrzystość i realne zyski.
-            Dlatego nasz model współpracy jest prosty — i działa.
-          </motion.p>
+          <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-8 md:gap-16 items-end">
+            <motion.h1
+              variants={fadeUp}
+              className="text-[32px] md:text-[44px] leading-none tracking-tight uppercase font-medium text-ink"
+            >
+              Jak działamy
+            </motion.h1>
+            <div>
+              <motion.p
+                variants={fadeUp}
+                className="font-light leading-snug text-ink mb-4"
+                style={{ fontSize: "clamp(18px, 2vw, 26px)" }}
+              >
+                Przejmujemy Twoje mieszkanie w całości.
+                Ty nie musisz robić nic — my zajmujemy się wszystkim,
+                od przygotowania po comiesięczny przelew.
+              </motion.p>
+              <motion.p
+                variants={fadeUp}
+                className="text-[15px] leading-[1.6] font-light"
+                style={{ color: "#6e7780" }}
+              >
+                Pracujemy z właścicielami mieszkań w Krakowie od ponad 10 lat.
+                Wiemy, że najważniejsze są: spokój, przejrzystość i realne zyski.
+                Dlatego nasz model współpracy jest prosty — i działa.
+              </motion.p>
+            </div>
+          </div>
         </motion.div>
       </section>
 
