@@ -143,13 +143,15 @@ export default function DodajMieszkanie() {
 
           {/* Left — sage bg: kanapa PNG on top, stats below */}
           <div className="bg-sage flex flex-col relative overflow-hidden">
-            {/* Kanapa transparent PNG — top, full width, no padding */}
-            <img
-              src={asset("/assets/kanapa-transparent.png")}
-              alt=""
-              className="w-full object-contain object-bottom"
-              style={{ maxHeight: "340px" }}
-            />
+            {/* Kanapa transparent PNG — anchored to bottom-right */}
+            <div className="relative flex-1 min-h-[300px]">
+              <img
+                src={asset("/assets/kanapa-transparent.png")}
+                alt=""
+                className="absolute bottom-0 right-0 w-full object-contain object-right-bottom"
+                style={{ maxHeight: "360px" }}
+              />
+            </div>
             {/* Stats */}
             <motion.div
               initial="hidden"
