@@ -4,11 +4,10 @@ import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import {
   motion,
-  AnimatePresence,
   useInView,
-  animate,
   type Variants,
 } from "framer-motion";
+import clsx from "clsx";
 import { SITE_CONTAINER } from "@/lib/layout";
 import { asset } from "@/lib/asset";
 import PageHeader from "@/components/PageHeader";
@@ -25,17 +24,23 @@ const stagger: Variants = {
 };
 const VP = { once: true, margin: "-80px" } as const;
 
-type Field = "name" | "email" | "phone" | "address" | "size" | "standard" | "message";
-
 const proofPoints = [
   { target: 96, suffix: "%", label: "średnie obłożenie naszych mieszkań" },
   { target: 200, suffix: "+", label: "mieszkań w zarządzaniu w Krakowie" },
   { target: 10, suffix: " lat", label: "doświadczenia w najmie krótkoterminowym" },
 ];
 
+const locationOptions = ["Stare Miasto", "Kazimierz", "Podgórze", "inne"];
+
+const standardOptions = [
+  { key: "podstawowy", label: "Podstawowy", desc: "Czyste, funkcjonalne mieszkanie bez designu" },
+  { key: "dobry",      label: "Dobry",       desc: "Urządzone ze smakiem, gotowe na Airbnb" },
+  { key: "premium",    label: "Premium",     desc: "Luksusowy design, zdjęcia pro, top oferta" },
+];
+
 const directContacts = [
-  { name: "Sara Wabik", role: "Head of Business Development", phone: "+48 720 830 314", email: "sara.wabik@squareapartments.pl" },
-  { name: "Aleksandra Masłowska", role: "Head Manager", phone: "+48 533 378 420", email: "aleksandra@squarestate.pl" },
+  { name: "Sara Wabik", role: "Dla klientów — oferta, wyceny", phone: "+48 720 830 314", email: "sara.wabik@squareapartments.pl" },
+  { name: "Aleksandra Masłowska", role: "Dla gości — rezerwacje", phone: "+48 533 378 420", email: "aleksandra@squarestate.pl" },
 ];
 
 function useCountUp(target: number, duration = 1400) {
@@ -61,68 +66,25 @@ function useCountUp(target: number, duration = 1400) {
 function CountStat({ target, suffix, label }: { target: number; suffix: string; label: string }) {
   const { count, ref } = useCountUp(target);
   return (
-    <div className="flex items-center gap-6 py-5 border-b border-bg/20 last:border-b-0 first:border-t border-t border-bg/20">
-      <p
-        className="font-display font-normal leading-none text-bg shrink-0"
-        style={{ fontSize: "clamp(24px, 2.5vw, 32px)", minWidth: "5.5rem" }}
-      >
+    <div className="py-8 border-b border-ink/10 last:border-b-0 first:border-t border-t border-ink/10">
+      <p className="font-display font-normal leading-none text-ink mb-2"
+        style={{ fontSize: "clamp(26px, 2.8vw, 40px)" }}>
         <span ref={ref}>{count}</span>{suffix}
       </p>
-      <p className="text-[15px] font-normal leading-snug text-bg/70">
+      <p className="text-[11px] font-normal uppercase tracking-widest leading-none text-ink/50">
         {label}
       </p>
     </div>
   );
 }
 
-const SelectArrow = () => (
-  <div className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2">
-    <svg width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
-      <path d="M1 1l4 4 4-4" stroke="#b3bbbd" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  </div>
-);
-
 export default function DodajMieszkanie() {
-  const [form, setForm] = useState<Record<Field, string>>({
-    name: "", email: "", phone: "", address: "", size: "", standard: "", message: "",
-  });
-  const [submitted, setSubmitted] = useState(false);
-  const [invalidFields, setInvalidFields] = useState<Set<Field>>(new Set());
-
-  function handleChange(
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
-    if (invalidFields.has(name as Field)) {
-      setInvalidFields((prev) => { const s = new Set(prev); s.delete(name as Field); return s; });
-    }
-  }
-
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    const required: Field[] = ["name", "email", "phone"];
-    const newInvalid = new Set<Field>();
-    required.forEach((key) => { if (!form[key].trim()) newInvalid.add(key); });
-
-    if (newInvalid.size > 0) {
-      setInvalidFields(newInvalid);
-      newInvalid.forEach((fieldKey) => {
-        const el = document.getElementById(`field-${fieldKey}`);
-        if (el) animate(el, { x: [0, -8, 8, -8, 8, 0] }, { duration: 0.4 });
-      });
-      return;
-    }
-
-    // TODO: connect to form backend (e.g. Resend, Formspree)
-    console.log("Form submit:", form);
-    setSubmitted(true);
-  }
-
-  const inputCls = "w-full bg-transparent text-[18px] font-light text-ink focus:outline-none py-2 appearance-none placeholder:text-ink/30 transition-colors duration-200";
-  const labelCls = "block text-[11px] leading-none uppercase tracking-widest font-normal text-ink/80 mb-2.5";
-  const fieldCls = "border-b border-muted pt-5 pb-1";
+  const [loc, setLoc] = useState("Stare Miasto");
+  const [size, setSize] = useState(60);
+  const [std, setStd] = useState("dobry");
+  const [aptCount, setAptCount] = useState(1);
+  const [calcPhone, setCalcPhone] = useState("");
+  const [calcEmail, setCalcEmail] = useState("");
 
   return (
     <>
@@ -137,289 +99,201 @@ export default function DodajMieszkanie() {
         description="Wypełnij formularz — wrócimy do Ciebie w ciągu 24 godzin z bezpłatną wyceną potencjału Twojego apartamentu."
       />
 
-      {/* ── STATS + FORM ──────────────────────────────────────────── */}
+      {/* ── SAGE BOX + FORM ───────────────────────────────────────── */}
       <section className="border-b border-muted">
-        <div className="grid grid-cols-1 lg:grid-cols-2">
+        <div className="grid grid-cols-1 lg:grid-cols-2 items-stretch">
 
-          {/* Left — sage bg: kanapa PNG on top, stats below */}
-          <div className="bg-sage flex flex-col relative overflow-hidden">
-            {/* Kanapa transparent PNG — anchored to bottom-right */}
-            <div className="relative flex-1 min-h-[300px]">
-              <img
-                src={asset("/assets/kanapa-transparent.png")}
-                alt=""
-                className="absolute bottom-0 right-0 w-full object-contain object-right-bottom"
-                style={{ maxHeight: "360px" }}
-              />
-            </div>
-            {/* Stats */}
-            <motion.div
-              initial="hidden"
-              whileInView="show"
-              viewport={VP}
-              variants={{ hidden: {}, show: { transition: { staggerChildren: 0.1 } } }}
-              className="flex-1 p-10 md:p-14"
-            >
-              <motion.p
-                variants={fadeUp}
-                className="text-[13px] leading-none uppercase tracking-widest font-normal text-bg/60 mb-10"
-              >
-                W liczbach
-              </motion.p>
-              {proofPoints.map((p) => (
-                <motion.div key={p.label} variants={fadeUp}>
-                  <CountStat {...p} />
-                </motion.div>
-              ))}
-            </motion.div>
+          {/* Left — sage bg full height, kanapa at bottom */}
+          <div className="bg-sage relative min-h-[400px] flex flex-col">
+            <div className="flex-1" />
+            <img
+              src={asset("/assets/kanapa-transparent.png")}
+              alt=""
+              className="w-full object-contain object-right-bottom block"
+              style={{ maxHeight: "420px" }}
+            />
           </div>
 
           {/* Right — form */}
-          <div className="px-8 md:px-14 py-14">
+          <div className="px-8 md:px-14 py-14 bg-bg">
             <motion.div initial="hidden" whileInView="show" viewport={VP} variants={stagger}>
-              <motion.p
-                variants={fadeUp}
-                className="text-[13px] leading-none uppercase tracking-widest font-normal text-ink/80 mb-4"
-              >
-                Bezpłatna wycena
+              <motion.p variants={fadeUp}
+                className="text-[13px] leading-none uppercase tracking-widest font-normal text-ink/80 mb-8">
+                Dodaj mieszkanie
               </motion.p>
-              <motion.h3
-                variants={fadeUp}
-                className="text-[20px] md:text-[26px] leading-snug font-medium text-ink mb-10"
-              >
-                Zostaw dane — oddzwonimy
-                <br className="hidden md:block" />
-                i przedstawimy wycenę bez zobowiązań.
-              </motion.h3>
 
-              <AnimatePresence mode="wait">
-                {submitted ? (
-                  <motion.div
-                    key="success"
-                    initial={{ opacity: 0, y: 24 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, ease }}
-                    className="py-20 flex flex-col items-center text-center border border-muted"
-                  >
-                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" className="mb-6" aria-hidden="true">
-                      <circle cx="24" cy="24" r="23" stroke="#14151a" strokeWidth="1" />
-                      <path d="M14 25l7 7 13-16" stroke="#14151a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                    <h3 className="text-[20px] md:text-[26px] leading-snug font-medium text-ink mb-3">
-                      Dziękujemy!
-                    </h3>
-                    <p className="text-[18px] font-light text-muted mb-8">
-                      Odezwiemy się do Ciebie w ciągu 24 godzin.
-                    </p>
-                    <Link href="/" className="text-[15px] font-normal text-muted hover:text-ink transition-colors duration-200">
-                      ← Wróć na stronę główną
-                    </Link>
-                  </motion.div>
-                ) : (
-                  <motion.form
-                    key="form"
-                    initial={{ opacity: 1 }}
-                    exit={{ opacity: 0, y: -12 }}
-                    onSubmit={handleSubmit}
-                    noValidate
-                  >
-                    {/* Name */}
-                    <div id="field-name" className={fieldCls}>
-                      <label htmlFor="name" className={labelCls}>
-                        Imię i nazwisko <span className="text-sage">*</span>
-                      </label>
-                      <input id="name" name="name" type="text" value={form.name} onChange={handleChange}
-                        className={inputCls} placeholder="Jan Kowalski" />
-                    </div>
+              <div className="space-y-7">
+                {/* Lokalizacja */}
+                <motion.div variants={fadeUp}>
+                  <label className="block text-[13px] leading-none uppercase tracking-widest font-normal text-ink/80 mb-2">
+                    Lokalizacja
+                  </label>
+                  <div className="relative">
+                    <select
+                      value={loc}
+                      onChange={(e) => setLoc(e.target.value)}
+                      className="w-full border border-muted bg-bg text-ink text-[15px] leading-snug font-normal px-4 py-2.5 pr-8 appearance-none focus:outline-none focus:border-ink transition-colors cursor-pointer"
+                    >
+                      {locationOptions.map((l) => (
+                        <option key={l} value={l}>{l}</option>
+                      ))}
+                    </select>
+                    <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-muted text-xs">▾</span>
+                  </div>
+                </motion.div>
 
-                    {/* Email */}
-                    <div id="field-email" className={fieldCls}>
-                      <label htmlFor="email" className={labelCls}>
-                        Adres e-mail <span className="text-sage">*</span>
-                      </label>
-                      <input id="email" name="email" type="email" value={form.email} onChange={handleChange}
-                        className={inputCls} placeholder="jan@example.com" />
-                    </div>
-
-                    {/* Phone */}
-                    <div id="field-phone" className={fieldCls}>
-                      <label htmlFor="phone" className={labelCls}>
-                        Numer telefonu <span className="text-sage">*</span>
-                      </label>
-                      <input id="phone" name="phone" type="tel" value={form.phone} onChange={handleChange}
-                        className={inputCls} placeholder="+48 000 000 000" />
-                    </div>
-
-                    {/* Address */}
-                    <div id="field-address" className={fieldCls}>
-                      <label htmlFor="address" className={labelCls}>
-                        Adres nieruchomości
-                      </label>
-                      <input id="address" name="address" type="text" value={form.address} onChange={handleChange}
-                        className={inputCls} placeholder="ul. Floriańska 12, Kraków" />
-                    </div>
-
-                    {/* Size */}
-                    <div id="field-size" className={fieldCls}>
-                      <label htmlFor="size" className={labelCls}>Metraż</label>
-                      <div className="relative">
-                        <select id="size" name="size" value={form.size} onChange={handleChange}
-                          className={`${inputCls} pr-6 cursor-pointer`}>
-                          <option value="">Wybierz metraż</option>
-                          <option value="do30">do 30 m²</option>
-                          <option value="30-50">30–50 m²</option>
-                          <option value="50-80">50–80 m²</option>
-                          <option value="80+">powyżej 80 m²</option>
-                        </select>
-                        <SelectArrow />
-                      </div>
-                    </div>
-
-                    {/* Standard */}
-                    <div id="field-standard" className={fieldCls}>
-                      <label htmlFor="standard" className={labelCls}>Standard</label>
-                      <div className="relative">
-                        <select id="standard" name="standard" value={form.standard} onChange={handleChange}
-                          className={`${inputCls} pr-6 cursor-pointer`}>
-                          <option value="">Wybierz standard</option>
-                          <option value="refresh">Do odświeżenia</option>
-                          <option value="good">Dobry</option>
-                          <option value="very-good">Bardzo dobry</option>
-                          <option value="premium">Premium</option>
-                        </select>
-                        <SelectArrow />
-                      </div>
-                    </div>
-
-                    {/* Message */}
-                    <div id="field-message" className={fieldCls}>
-                      <label htmlFor="message" className={labelCls}>Wiadomość</label>
-                      <textarea id="message" name="message" rows={3} value={form.message} onChange={handleChange}
-                        className={`${inputCls} resize-none`}
-                        placeholder="Opcjonalnie — coś co chcesz nam powiedzieć" />
-                    </div>
-
-                    {/* Submit */}
-                    <div className="pt-8">
-                      <motion.button
-                        type="submit"
-                        whileHover={{ scale: 1.01 }}
-                        transition={{ duration: 0.2 }}
-                        className="w-full h-[56px] bg-ink text-bg text-[15px] font-normal uppercase tracking-widest hover:bg-sage transition-colors duration-300"
+                {/* Liczba mieszkań */}
+                <motion.div variants={fadeUp}>
+                  <label className="block text-[13px] leading-none uppercase tracking-widest font-normal text-ink/80 mb-3">
+                    Liczba mieszkań
+                  </label>
+                  <div className="flex gap-2">
+                    {[1, 2, 3, "4+"].map((n) => (
+                      <button
+                        key={n}
+                        type="button"
+                        onClick={() => setAptCount(typeof n === "number" ? n : 4)}
+                        className={clsx(
+                          "flex-1 py-2.5 text-[13px] uppercase tracking-widest font-normal border transition-colors",
+                          aptCount === (typeof n === "number" ? n : 4)
+                            ? "border-sage bg-sage text-bg"
+                            : "border-muted text-ink hover:border-sage hover:text-sage"
+                        )}
                       >
-                        Wyślij zapytanie
-                      </motion.button>
-                      <p className="mt-4 text-[13px] font-normal text-muted text-center leading-relaxed">
-                        Odpowiadamy w ciągu 24 godzin.
-                        <br />
-                        Wycena jest bezpłatna i niezobowiązująca.
-                      </p>
-                    </div>
-                  </motion.form>
-                )}
-              </AnimatePresence>
+                        {n}
+                      </button>
+                    ))}
+                  </div>
+                </motion.div>
+
+                {/* Metraż */}
+                <motion.div variants={fadeUp}>
+                  <label className="block text-[13px] leading-none uppercase tracking-widest font-normal text-ink/80 mb-2">
+                    Metraż — <span className="text-ink">{size} m²</span>
+                  </label>
+                  <input
+                    type="range" min={20} max={120} value={size}
+                    onChange={(e) => setSize(Number(e.target.value))}
+                    className="w-full appearance-none cursor-pointer bg-transparent"
+                  />
+                  <div className="flex justify-between text-[10px] text-muted mt-1.5">
+                    <span>20 m²</span>
+                    <span>120 m²</span>
+                  </div>
+                </motion.div>
+
+                {/* Standard */}
+                <motion.div variants={fadeUp}>
+                  <label className="block text-[13px] leading-none uppercase tracking-widest font-normal text-ink/80 mb-3">
+                    Standard wykończenia
+                  </label>
+                  <div className="grid grid-cols-3 gap-2">
+                    {standardOptions.map(({ key, label, desc }) => (
+                      <button
+                        key={key}
+                        type="button"
+                        onClick={() => setStd(key)}
+                        className={clsx(
+                          "py-3 px-2 text-left border transition-colors",
+                          std === key
+                            ? "border-sage bg-sage text-bg"
+                            : "border-muted text-ink hover:border-sage hover:text-sage"
+                        )}
+                      >
+                        <span className="block text-[11px] uppercase tracking-[0.12em] font-medium mb-1">{label}</span>
+                        <span className={clsx("block text-[10px] leading-snug font-normal",
+                          std === key ? "text-bg/70" : "text-ink/40")}>
+                          {desc}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                </motion.div>
+              </div>
+
+              {/* Contact */}
+              <motion.div variants={fadeUp} className="mt-8 pt-8 border-t border-ink/10">
+                <div className="border-b border-ink/10 py-4">
+                  <label className="block text-[11px] leading-none uppercase tracking-widest font-normal text-ink/80 mb-2.5">
+                    Telefon
+                  </label>
+                  <input
+                    type="tel" value={calcPhone}
+                    onChange={(e) => setCalcPhone(e.target.value)}
+                    placeholder="+48 000 000 000"
+                    className="w-full bg-transparent text-[18px] font-light text-ink focus:outline-none placeholder:text-ink/20"
+                  />
+                </div>
+                <div className="border-b border-ink/10 py-4 mb-8">
+                  <label className="block text-[11px] leading-none uppercase tracking-widest font-normal text-ink/80 mb-2.5">
+                    E-mail
+                  </label>
+                  <input
+                    type="email" value={calcEmail}
+                    onChange={(e) => setCalcEmail(e.target.value)}
+                    placeholder="jan@example.com"
+                    className="w-full bg-transparent text-[18px] font-light text-ink focus:outline-none placeholder:text-ink/20"
+                  />
+                </div>
+                <Link
+                  href="/kontakt"
+                  className="block w-full text-center px-8 py-4 bg-ink text-bg text-[13px] leading-none uppercase tracking-widest font-normal hover:bg-sage transition-colors"
+                >
+                  Umów bezpłatną konsultację
+                </Link>
+              </motion.div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* ── SOCIAL PROOF ─────────────────────────────────────────── */}
-      <section>
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={VP}
-          transition={{ duration: 0.8, ease }}
-          className="bg-ink"
-        >
-          <div className={`${SITE_CONTAINER} py-[80px]`}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-20 items-center">
-
-              {/* Quote */}
-              <div>
-                <p
-                  className="font-light leading-[1.55] max-w-[480px]"
-                  style={{ fontSize: "clamp(20px, 2.2vw, 28px)", color: "#ffffff" }}
-                >
-                  &ldquo;Oddałem mieszkanie Squarestate 3 lata temu.
-                  Od tamtej pory nie kiwnąłem palcem —
-                  a co miesiąc wpływa przelew.&rdquo;
-                </p>
-                <p
-                  className="mt-6 text-[15px] font-normal leading-snug"
-                  style={{ color: "rgba(255,255,255,0.5)" }}
-                >
-                  — Piotr M., właściciel z Krakowa
-                </p>
-              </div>
-
-              {/* Stats */}
-              <div>
-                {[
-                  { num: "45 000+", label: "opinii na Airbnb" },
-                  { num: "4,77", star: true, label: "średnia ocena" },
-                  { num: "Superhost", label: "status od 10 lat" },
-                ].map(({ num, label, star }: { num: string; label: string; star?: boolean }, i) => (
-                  <div
-                    key={label}
-                    className="py-8 border-b first:border-t"
-                    style={{ borderColor: "rgba(255,255,255,0.1)" }}
-                  >
-                    <p
-                      className="font-display font-normal leading-none text-white mb-2"
-                      style={{ fontSize: i === 2 ? "clamp(22px, 2.2vw, 32px)" : "clamp(26px, 2.8vw, 40px)" }}
-                    >
-                      {num}{star && <span style={{ fontSize: "0.7em" }}>★</span>}
-                    </p>
-                    <p
-                      className="text-[11px] font-normal uppercase tracking-widest leading-none"
-                      style={{ color: "rgba(255,255,255,0.4)" }}
-                    >
-                      {label}
-                    </p>
-                  </div>
-                ))}
-              </div>
+      {/* ── SOCIAL PROOF — white bg ───────────────────────────────── */}
+      <section className="border-b border-muted bg-bg">
+        <div className={`${SITE_CONTAINER} py-[80px]`}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-20 items-center">
+            <div>
+              <p className="font-light leading-[1.55] max-w-[480px] text-ink"
+                style={{ fontSize: "clamp(20px, 2.2vw, 28px)" }}>
+                &ldquo;Oddałem mieszkanie Squarestate 3 lata temu.
+                Od tamtej pory nie kiwnąłem palcem —
+                a co miesiąc wpływa przelew.&rdquo;
+              </p>
+              <p className="mt-6 text-[15px] font-normal leading-snug text-ink/50">
+                — Piotr M., właściciel z Krakowa
+              </p>
+            </div>
+            <div>
+              {proofPoints.map((p) => (
+                <CountStat key={p.label} {...p} />
+              ))}
             </div>
           </div>
-        </motion.div>
+        </div>
       </section>
 
       {/* ── DIRECT CONTACT ───────────────────────────────────────── */}
       <section className="border-t border-muted">
         <div className={`${SITE_CONTAINER} py-[64px]`}>
           <motion.div initial="hidden" whileInView="show" viewport={VP} variants={stagger}>
-            <motion.p
-              variants={fadeUp}
-              className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-10"
-            >
+            <motion.p variants={fadeUp}
+              className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-10">
               Wolisz porozmawiać?
             </motion.p>
             <motion.div
               variants={{ hidden: {}, show: { transition: { staggerChildren: 0.1 } } }}
-              initial="hidden"
-              whileInView="show"
-              viewport={VP}
+              initial="hidden" whileInView="show" viewport={VP}
               className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16"
             >
               {directContacts.map(({ name, role, phone, email }) => (
                 <motion.div key={name} variants={fadeUp}>
-                  <p className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-3">
-                    {role}
-                  </p>
-                  <p className="text-[18px] font-normal leading-none text-ink mb-4">
-                    {name}
-                  </p>
-                  <a
-                    href={`tel:${phone.replace(/\s/g, "")}`}
-                    className="block text-[18px] font-light leading-snug text-ink hover:underline decoration-muted underline-offset-2 mb-1"
-                  >
+                  <p className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-3">{role}</p>
+                  <p className="text-[18px] font-normal leading-none text-ink mb-4">{name}</p>
+                  <a href={`tel:${phone.replace(/\s/g, "")}`}
+                    className="block text-[18px] font-light leading-snug text-ink hover:underline decoration-muted underline-offset-2 mb-1">
                     {phone}
                   </a>
-                  <a
-                    href={`mailto:${email}`}
-                    className="block text-[18px] font-light leading-snug text-ink hover:underline decoration-muted underline-offset-2 break-all"
-                  >
+                  <a href={`mailto:${email}`}
+                    className="block text-[18px] font-light leading-snug text-ink hover:underline decoration-muted underline-offset-2 break-all">
                     {email}
                   </a>
                 </motion.div>
