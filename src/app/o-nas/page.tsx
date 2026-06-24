@@ -321,7 +321,7 @@ export default function ONas() {
       </section>
 
       {/* CTA */}
-      <section>
+      <section id="kariera">
         <motion.div
           initial="hidden"
           whileInView="show"

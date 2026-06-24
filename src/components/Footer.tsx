@@ -7,22 +7,18 @@ import { asset } from "@/lib/asset";
 
 const contacts = [
   {
-    role: "Head of Business Development",
+    role: "Dla klientów",
+    subtitle: "Oferta, wyceny",
     name: "Sara Wabik",
     phone: "+48 720 830 314",
     email: "sara.wabik@squareapartments.pl",
   },
   {
-    role: "Head Manager",
+    role: "Dla gości",
+    subtitle: "Rezerwacje",
     name: "Aleksandra Masłowska",
     phone: "+48 533 378 420",
     email: "aleksandra@squarestate.pl",
-  },
-  {
-    role: "Marketing & PR",
-    name: "Aleksandra Plewa",
-    phone: "+48 601 971 483",
-    email: "aleksandra.plewa@squarestate.pl",
   },
 ];
 
@@ -32,6 +28,12 @@ const bottomLinks = [
   { href: "/o-nas", label: "O nas" },
   { href: "/blog", label: "Blog" },
   { href: "/kontakt", label: "Kontakt" },
+  { href: "/o-nas#kariera", label: "Kariera" },
+];
+
+const legalLinks = [
+  { href: "/polityka-prywatnosci", label: "Polityka prywatności" },
+  { href: "/regulamin", label: "Regulamin" },
 ];
 
 export default function Footer() {
@@ -46,7 +48,6 @@ export default function Footer() {
       el.style.fontSize = "100px";
       const natural = el.scrollWidth;
       const available = wrap.offsetWidth;
-      // 0.7 = scaled down 30% from the original full-bleed fit
       if (natural > 0) el.style.fontSize = `${(available / natural) * 100 * 0.7}px`;
     };
     fit();
@@ -74,11 +75,14 @@ export default function Footer() {
         </div>
 
         {/* Contact columns */}
-        <div className="py-16 border-b border-muted grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
-          {contacts.map(({ role, name, phone, email }) => (
+        <div className="py-16 border-b border-muted grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-8">
+          {contacts.map(({ role, subtitle, name, phone, email }) => (
             <div key={name}>
-              <p className="text-[13px] leading-none uppercase tracking-widest font-normal text-ink/50 mb-5">
+              <p className="text-[13px] leading-none uppercase tracking-widest font-normal text-ink mb-1">
                 {role}
+              </p>
+              <p className="text-[13px] leading-none font-normal text-ink/50 mb-5">
+                {subtitle}
               </p>
               <p className="text-[18px] leading-[1.55] font-medium text-ink mb-3">{name}</p>
               <a
@@ -98,7 +102,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="py-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div className="py-6 border-b border-muted flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <Link href="/" className="flex items-center gap-3">
             <img src={asset("/assets/squareblack.png")} alt="Squarestate" className="h-6 w-auto opacity-40" />
             <span className="text-[13px] leading-none uppercase tracking-widest font-normal text-ink/50">
@@ -117,6 +121,19 @@ export default function Footer() {
               </Link>
             ))}
           </nav>
+        </div>
+
+        {/* Legal */}
+        <div className="py-4 flex flex-wrap gap-x-6 gap-y-2">
+          {legalLinks.map(({ href, label }) => (
+            <Link
+              key={href}
+              href={href}
+              className="text-[11px] leading-none uppercase tracking-widest font-normal text-ink/40 hover:text-ink transition-colors"
+            >
+              {label}
+            </Link>
+          ))}
         </div>
       </div>
     </footer>
