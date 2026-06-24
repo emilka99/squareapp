@@ -128,20 +128,29 @@ export default function DodajMieszkanie() {
     <>
       {/* ── PAGE HEADER ───────────────────────────────────────────── */}
       <PageHeader
-        imageSrc={asset("/assets/kanapa.jpg")}
+        imageSrc={asset("/assets/rozowy-salon.jpg")}
         imageAlt="Dodaj mieszkanie — Squarestate"
         className="border-b border-muted"
         pageLabel="Dla właścicieli"
-        heading="Zarabiaj na swoim mieszkaniu"
-        description="Przejmujemy pełną obsługę Twojego apartamentu w Krakowie. Ty dostajesz comiesięczny przelew — my zajmujemy się wszystkim."
+        heading="Sprawdź, ile zarobi Twoje mieszkanie"
+        headingSize="text-[28px] md:text-[38px] lg:text-[48px]"
+        description="Wypełnij formularz — wrócimy do Ciebie w ciągu 24 godzin z bezpłatną wyceną potencjału Twojego apartamentu."
       />
 
       {/* ── STATS + FORM ──────────────────────────────────────────── */}
       <section className="border-b border-muted">
         <div className="grid grid-cols-1 lg:grid-cols-2">
 
-          {/* Left — sage bg: stats top, image bottom */}
-          <div className="bg-sage flex flex-col">
+          {/* Left — sage bg: kanapa PNG on top, stats below */}
+          <div className="bg-sage flex flex-col relative overflow-hidden">
+            {/* Kanapa transparent PNG — top, full width, no padding */}
+            <img
+              src={asset("/assets/kanapa-transparent.png")}
+              alt=""
+              className="w-full object-contain object-bottom"
+              style={{ maxHeight: "340px" }}
+            />
+            {/* Stats */}
             <motion.div
               initial="hidden"
               whileInView="show"
@@ -161,12 +170,6 @@ export default function DodajMieszkanie() {
                 </motion.div>
               ))}
             </motion.div>
-            <img
-              src={asset("/assets/kanapa.jpg")}
-              alt=""
-              className="w-full object-cover object-center"
-              style={{ aspectRatio: "4/3" }}
-            />
           </div>
 
           {/* Right — form */}
@@ -182,9 +185,9 @@ export default function DodajMieszkanie() {
                 variants={fadeUp}
                 className="text-[20px] md:text-[26px] leading-snug font-medium text-ink mb-10"
               >
-                Napisz do nas — wrócimy do Ciebie
+                Zostaw dane — oddzwonimy
                 <br className="hidden md:block" />
-                w ciągu 24 godzin z wyceną.
+                i przedstawimy wycenę bez zobowiązań.
               </motion.h3>
 
               <AnimatePresence mode="wait">

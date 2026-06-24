@@ -13,6 +13,7 @@ interface PageHeaderProps {
   description?: string;  // body copy — right column
   ctaLabel?: string;     // optional CTA button label
   ctaHref?: string;      // optional CTA button href
+  headingSize?: string;  // override heading font size classes
 }
 
 const fadeUp = {
@@ -29,6 +30,7 @@ export default function PageHeader({
   description,
   ctaLabel,
   ctaHref,
+  headingSize = "text-[36px] md:text-[52px] lg:text-[64px]",
 }: PageHeaderProps) {
   const hasText = !!(pageLabel || heading || description);
 
@@ -94,7 +96,7 @@ export default function PageHeader({
               {heading && (
                 <motion.h1
                   variants={fadeUp}
-                  className="text-[36px] md:text-[52px] lg:text-[64px] leading-none tracking-tight uppercase font-medium text-ink"
+                  className={`${headingSize} leading-none tracking-tight uppercase font-medium text-ink`}
                 >
                   {heading}
                 </motion.h1>
