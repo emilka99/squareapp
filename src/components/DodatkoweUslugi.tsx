@@ -25,7 +25,7 @@ const services = [
       "Całodobowa gotowość na zgłoszenia techniczne od gości i właścicieli nieruchomości.",
   },
   {
-    name: "Autorskie oprogramowanie",
+    name: "Panel dla właściciela",
     detail:
       "Własny system zarządzania rezerwacjami — pełna kontrola, transparentność i dane w czasie rzeczywistym.",
   },

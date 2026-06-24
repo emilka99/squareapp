@@ -11,6 +11,7 @@ import {
 } from "framer-motion";
 import { SITE_CONTAINER } from "@/lib/layout";
 import { asset } from "@/lib/asset";
+import PageHeader from "@/components/PageHeader";
 
 const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
@@ -26,19 +27,10 @@ const VP = { once: true, margin: "-80px" } as const;
 
 type Field = "name" | "email" | "phone" | "address" | "size" | "standard" | "message";
 
-const heroLines = ["ZARABIAJ", "NA SWOIM", "MIESZKANIU."];
-
 const proofPoints = [
   { target: 96, suffix: "%", label: "średnie obłożenie naszych mieszkań" },
   { target: 200, suffix: "+", label: "mieszkań w zarządzaniu w Krakowie" },
   { target: 10, suffix: " lat", label: "doświadczenia w najmie krótkoterminowym" },
-];
-
-const benefits = [
-  { num: "01", text: "Comiesięczny przelew bez żadnych niespodzianek. Prowizja tylko od faktycznych przychodów." },
-  { num: "02", text: "Przejmujemy wszystko: rezerwacje, gości, sprzątanie, naprawy. Dosłownie wszystko." },
-  { num: "03", text: "Szkody spowodowane przez gości pokrywamy z własnej kieszeni. Twoje mieszkanie jest bezpieczne." },
-  { num: "04", text: "Wypowiedzenie umowy w każdej chwili — 3 miesiące, bez podania przyczyny." },
 ];
 
 const directContacts = [
@@ -69,14 +61,14 @@ function useCountUp(target: number, duration = 1400) {
 function CountStat({ target, suffix, label }: { target: number; suffix: string; label: string }) {
   const { count, ref } = useCountUp(target);
   return (
-    <div className="flex items-center gap-6 py-5 border-b border-muted last:border-b-0 first:border-t border-t">
+    <div className="flex items-center gap-6 py-5 border-b border-bg/20 last:border-b-0 first:border-t border-t border-bg/20">
       <p
-        className="font-display font-normal leading-none text-ink shrink-0"
+        className="font-display font-normal leading-none text-bg shrink-0"
         style={{ fontSize: "clamp(24px, 2.5vw, 32px)", minWidth: "5.5rem" }}
       >
         <span ref={ref}>{count}</span>{suffix}
       </p>
-      <p className="text-[15px] font-normal leading-snug text-muted">
+      <p className="text-[15px] font-normal leading-snug text-bg/70">
         {label}
       </p>
     </div>
@@ -128,139 +120,61 @@ export default function DodajMieszkanie() {
     setSubmitted(true);
   }
 
-  const inputCls = "w-full bg-transparent text-[18px] font-light text-ink focus:outline-none py-2 appearance-none placeholder:text-muted transition-colors duration-200";
-  const labelCls = "block text-[11px] leading-none uppercase tracking-widest font-normal text-muted mb-2.5";
+  const inputCls = "w-full bg-transparent text-[18px] font-light text-ink focus:outline-none py-2 appearance-none placeholder:text-ink/30 transition-colors duration-200";
+  const labelCls = "block text-[11px] leading-none uppercase tracking-widest font-normal text-ink/80 mb-2.5";
   const fieldCls = "border-b border-muted pt-5 pb-1";
 
   return (
     <>
-      {/* ── HERO TEXT ─────────────────────────────────────────────── */}
+      {/* ── PAGE HEADER ───────────────────────────────────────────── */}
+      <PageHeader
+        imageSrc={asset("/assets/kanapa.jpg")}
+        imageAlt="Dodaj mieszkanie — Squarestate"
+        className="border-b border-muted"
+        pageLabel="Dla właścicieli"
+        heading="Zarabiaj na swoim mieszkaniu"
+        description="Przejmujemy pełną obsługę Twojego apartamentu w Krakowie. Ty dostajesz comiesięczny przelew — my zajmujemy się wszystkim."
+      />
+
+      {/* ── STATS + FORM ──────────────────────────────────────────── */}
       <section className="border-b border-muted">
-        <div className={`${SITE_CONTAINER} py-[80px]`}>
-          <div className="grid grid-cols-1 lg:grid-cols-[11fr_9fr] gap-12 lg:gap-20 items-end">
+        <div className="grid grid-cols-1 lg:grid-cols-2">
 
-            {/* Left — headline */}
-            <motion.div initial="hidden" animate="show" variants={stagger}>
-              <motion.p
-                variants={fadeUp}
-                className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-6"
-              >
-                Dla właścicieli
-              </motion.p>
-              <h1 className="text-[40px] md:text-[64px] leading-none tracking-tight uppercase font-medium text-ink">
-                {heroLines.map((line, i) => (
-                  <motion.span
-                    key={line}
-                    className="block"
-                    initial={{ opacity: 0, y: 40 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, ease, delay: 0.1 + i * 0.06 }}
-                  >
-                    {line}
-                  </motion.span>
-                ))}
-              </h1>
-              <motion.p
-                variants={fadeUp}
-                className="mt-8 text-[20px] font-light leading-[1.6] max-w-[480px]"
-                style={{ color: "#6e7780" }}
-              >
-                Przejmujemy pełną obsługę Twojego apartamentu w Krakowie.
-                Ty dostajesz comiesięczny przelew — my zajmujemy się wszystkim.
-              </motion.p>
-            </motion.div>
-
-            {/* Right — proof points with count-up */}
+          {/* Left — sage bg: stats top, image bottom */}
+          <div className="bg-sage flex flex-col">
             <motion.div
               initial="hidden"
-              animate="show"
-              variants={{ hidden: {}, show: { transition: { staggerChildren: 0.1, delayChildren: 0.35 } } }}
+              whileInView="show"
+              viewport={VP}
+              variants={{ hidden: {}, show: { transition: { staggerChildren: 0.1 } } }}
+              className="flex-1 p-10 md:p-14"
             >
+              <motion.p
+                variants={fadeUp}
+                className="text-[13px] leading-none uppercase tracking-widest font-normal text-bg/60 mb-10"
+              >
+                W liczbach
+              </motion.p>
               {proofPoints.map((p) => (
                 <motion.div key={p.label} variants={fadeUp}>
                   <CountStat {...p} />
                 </motion.div>
               ))}
             </motion.div>
+            <img
+              src={asset("/assets/kanapa.jpg")}
+              alt=""
+              className="w-full object-cover object-center"
+              style={{ aspectRatio: "4/3" }}
+            />
           </div>
-        </div>
-      </section>
 
-      {/* ── FULL-WIDTH IMAGE ─────────────────────────────────────── */}
-      <div className="w-full overflow-hidden">
-        <img
-          src={asset("/assets/11image.png")}
-          alt=""
-          className="w-full object-cover"
-          style={{ aspectRatio: "16/7" }}
-        />
-      </div>
-
-      {/* ── BENEFITS + FORM ───────────────────────────────────────── */}
-      <section className="border-b border-muted">
-        <div className={`${SITE_CONTAINER} py-[80px]`}>
-          <div className="grid grid-cols-1 lg:grid-cols-[9fr_11fr] gap-16 lg:gap-20">
-
-            {/* Left — sticky benefits */}
-            <div className="lg:sticky lg:top-[120px] lg:self-start">
-              <motion.div initial="hidden" whileInView="show" viewport={VP} variants={stagger}>
-                <motion.p
-                  variants={fadeUp}
-                  className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-4"
-                >
-                  Dlaczego warto
-                </motion.p>
-                <motion.h2
-                  variants={fadeUp}
-                  className="text-[32px] md:text-[48px] leading-none tracking-tight uppercase font-medium text-ink mb-10"
-                >
-                  Co dostajesz
-                </motion.h2>
-              </motion.div>
-
-              <motion.div
-                initial="hidden"
-                whileInView="show"
-                viewport={VP}
-                variants={{ hidden: {}, show: { transition: { staggerChildren: 0.1 } } }}
-              >
-                {benefits.map(({ num, text }) => (
-                  <motion.div
-                    key={num}
-                    variants={fadeUp}
-                    className="flex items-start gap-5 py-6 border-b border-muted last:border-b-0"
-                  >
-                    <span className="text-[13px] font-normal leading-none text-muted shrink-0 pt-1">
-                      {num}
-                    </span>
-                    <p className="text-[18px] font-light leading-[1.55] text-ink">
-                      {text}
-                    </p>
-                  </motion.div>
-                ))}
-              </motion.div>
-
-              <motion.div
-                initial="hidden"
-                whileInView="show"
-                viewport={VP}
-                variants={fadeUp}
-                className="mt-8"
-              >
-                <Link
-                  href="/jak-dzialamy"
-                  className="text-[18px] font-normal text-ink border-b border-muted pb-0.5 hover:border-ink transition-colors duration-200"
-                >
-                  Poznaj szczegóły współpracy →
-                </Link>
-              </motion.div>
-            </div>
-
-            {/* Right — form */}
+          {/* Right — form */}
+          <div className="px-8 md:px-14 py-14">
             <motion.div initial="hidden" whileInView="show" viewport={VP} variants={stagger}>
               <motion.p
                 variants={fadeUp}
-                className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-4"
+                className="text-[13px] leading-none uppercase tracking-widest font-normal text-ink/80 mb-4"
               >
                 Bezpłatna wycena
               </motion.p>
