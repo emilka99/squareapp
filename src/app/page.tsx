@@ -416,6 +416,7 @@ export default function Home() {
   const [loc, setLoc] = useState("Stare Miasto");
   const [size, setSize] = useState(60);
   const [std, setStd] = useState("dobry");
+  const [aptCount, setAptCount] = useState(1);
   const [calcPhone, setCalcPhone] = useState("");
   const [calcEmail, setCalcEmail] = useState("");
 
@@ -527,9 +528,17 @@ export default function Home() {
                 <p className="text-[13px] leading-none uppercase tracking-widest font-normal text-ink/40 mb-4">
                   {String(i + 1).padStart(2, "0")}. {label}
                 </p>
-                <h3 className="text-[20px] md:text-[26px] leading-snug font-medium text-ink mb-4">
-                  {title}
-                </h3>
+                {i === 1 ? (
+                  <Link href="/realizacje">
+                    <h3 className="text-[20px] md:text-[26px] leading-snug font-medium text-ink mb-4 hover:text-sage transition-colors">
+                      {title}
+                    </h3>
+                  </Link>
+                ) : (
+                  <h3 className="text-[20px] md:text-[26px] leading-snug font-medium text-ink mb-4">
+                    {title}
+                  </h3>
+                )}
                 <p className="text-[18px] leading-[1.55] font-light text-ink/55">{body}</p>
               </motion.div>
             ))}
@@ -563,10 +572,7 @@ export default function Home() {
                 variants={fadeUp}
                 className="bg-sage p-8 md:p-10"
               >
-                <p
-                  className="font-medium tracking-tight text-bg/20 mb-4 leading-none"
-                  style={{ fontSize: "clamp(96px, 12vw, 180px)" }}
-                >
+                <p className="text-[32px] leading-none font-medium tracking-tight text-sage mb-4">
                   {num}
                 </p>
                 <h3 className="text-[20px] md:text-[26px] leading-snug font-medium text-bg mb-4">
@@ -624,7 +630,7 @@ export default function Home() {
               </motion.h2>
               <motion.p
                 variants={fadeUp}
-                className="text-[16px] md:text-[20px] leading-[1.6] font-normal text-ink/70 max-w-sm"
+                className="text-[16px] md:text-[20px] leading-[1.6] font-normal text-ink max-w-sm"
               >
                 Sprawdź, ile możesz zarabiać na krótkoterminowym wynajmie w
                 Krakowie. Bezpłatna wycena i konsultacja bez zobowiązań.
@@ -639,14 +645,14 @@ export default function Home() {
               variants={fadeUp}
               className="p-8 md:p-10 bg-white"
             >
-              <p className="text-[13px] leading-none uppercase tracking-widest font-normal text-ink/50 mb-8">
+              <p className="text-[13px] leading-none uppercase tracking-widest font-normal text-ink/80 mb-8">
                 Dodaj mieszkanie
               </p>
 
               <div className="space-y-7">
                 {/* Location */}
                 <div>
-                  <label className="block text-[13px] leading-none uppercase tracking-widest font-normal text-ink/50 mb-2">
+                  <label className="block text-[13px] leading-none uppercase tracking-widest font-normal text-ink/80 mb-2">
                     Lokalizacja
                   </label>
                   <div className="relative">
@@ -667,9 +673,32 @@ export default function Home() {
                   </div>
                 </div>
 
+                {/* Apartment count */}
+                <div>
+                  <label className="block text-[13px] leading-none uppercase tracking-widest font-normal text-ink/80 mb-3">
+                    Liczba mieszkań
+                  </label>
+                  <div className="flex gap-2">
+                    {[1, 2, 3, "4+"].map((n) => (
+                      <button
+                        key={n}
+                        onClick={() => setAptCount(typeof n === "number" ? n : 4)}
+                        className={clsx(
+                          "flex-1 py-2.5 text-[13px] uppercase tracking-widest font-normal border transition-colors",
+                          aptCount === (typeof n === "number" ? n : 4)
+                            ? "border-sage bg-sage text-bg"
+                            : "border-muted text-ink hover:border-sage hover:text-sage"
+                        )}
+                      >
+                        {n}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
                 {/* Size slider */}
                 <div>
-                  <label className="block text-[13px] leading-none uppercase tracking-widest font-normal text-ink/50 mb-2">
+                  <label className="block text-[13px] leading-none uppercase tracking-widest font-normal text-ink/80 mb-2">
                     Metraż —{" "}
                     <span className="text-ink">{size} m²</span>
                   </label>
@@ -689,7 +718,7 @@ export default function Home() {
 
                 {/* Standard */}
                 <div>
-                  <label className="block text-[13px] leading-none uppercase tracking-widest font-normal text-ink/50 mb-3">
+                  <label className="block text-[13px] leading-none uppercase tracking-widest font-normal text-ink/80 mb-3">
                     Standard wykończenia
                   </label>
                   <div className="grid grid-cols-3 gap-2">
@@ -722,7 +751,7 @@ export default function Home() {
               {/* Contact fields */}
               <div className="mt-8 pt-8 border-t border-ink/10 space-y-0">
                 <div className="border-b border-ink/10 py-4">
-                  <label className="block text-[11px] leading-none uppercase tracking-widest font-normal text-ink/40 mb-2.5">
+                  <label className="block text-[11px] leading-none uppercase tracking-widest font-normal text-ink/80 mb-2.5">
                     Telefon
                   </label>
                   <input
@@ -734,7 +763,7 @@ export default function Home() {
                   />
                 </div>
                 <div className="border-b border-ink/10 py-4 mb-8">
-                  <label className="block text-[11px] leading-none uppercase tracking-widest font-normal text-ink/40 mb-2.5">
+                  <label className="block text-[11px] leading-none uppercase tracking-widest font-normal text-ink/80 mb-2.5">
                     E-mail
                   </label>
                   <input
