@@ -53,6 +53,14 @@ const positions = [
   },
 ];
 
+const stats = [
+  { value: "149", suffix: "tys.", label: "gości wynajęło nasze mieszkania" },
+  { value: "12", suffix: "mln zł", label: "wypłat dla właścicieli mieszkań" },
+  { value: "60", suffix: "tys.", label: "59 702 rezerwacji od początku istnienia firmy" },
+  { value: "166", suffix: "tys.", label: "166 264 dni zarezerwowanych przez gości" },
+  { value: "2804,6", suffix: "km", label: "wykorzystanego papieru toaletowego (od Krakowa do Madrytu)" },
+];
+
 function InstagramIcon() {
   return (
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -327,6 +335,42 @@ export default function ONas() {
                     {contact}
                   </a>
                 )}
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ZESPÓŁ — pełnoekranowe zdjęcie + liczby */}
+      <section className="border-b border-muted">
+        {/* Full-width photo (grey placeholder) */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={VP}
+          transition={{ duration: 0.8, ease }}
+          className="w-full bg-sage/20"
+          style={{ aspectRatio: "21/9" }}
+        />
+
+        {/* Numbers */}
+        <div className={`${SITE_CONTAINER} py-20 md:py-28`}>
+          <motion.div
+            initial="hidden"
+            whileInView="show"
+            viewport={VP}
+            variants={stagger}
+            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-8 gap-y-12"
+          >
+            {stats.map(({ value, suffix, label }) => (
+              <motion.div key={label} variants={fadeUp}>
+                <p className="font-medium leading-none tracking-tight text-ink">
+                  <span style={{ fontSize: "clamp(44px, 5vw, 72px)" }}>{value}</span>
+                  <span className="text-[16px] md:text-[18px] font-normal ml-1">{suffix}</span>
+                </p>
+                <p className="text-[13px] leading-snug font-normal text-muted mt-4 max-w-[220px]">
+                  {label}
+                </p>
               </motion.div>
             ))}
           </motion.div>
