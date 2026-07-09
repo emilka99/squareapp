@@ -40,6 +40,19 @@ const team = [
   { name: "Aleksandra Masłowska", role: "Head Manager", desc: "Zarządza operacjami — od obsługi gości po koordynację zespołów terenowych.", contact: "aleksandra@squarestate.pl" },
 ];
 
+const positions = [
+  {
+    title: "Specjalista ds. marketingu",
+    desc: "Prowadzenie kanałów social media i kampanii dla naszych apartamentów oraz marek ekosystemu.",
+    requirements: "Doświadczenie w social media, dobre pióro, znajomość Meta Ads i Canva/Figma.",
+  },
+  {
+    title: "Content Creator",
+    desc: "Tworzenie zdjęć i wideo z naszych obiektów oraz materiałów na Instagram i Reels.",
+    requirements: "Umiejętność fotografii i montażu mobile, oko do estetyki, samodzielność.",
+  },
+];
+
 function InstagramIcon() {
   return (
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -344,6 +357,62 @@ export default function ONas() {
             </Link>
           </motion.div>
         </motion.div>
+      </section>
+
+      {/* OTWARTE REKRUTACJE */}
+      <section className="border-t border-[rgba(0,0,0,0.1)]">
+        <div className={`${SITE_CONTAINER} py-20 md:py-28`}>
+          <motion.div
+            initial="hidden"
+            whileInView="show"
+            viewport={VP}
+            variants={stagger}
+            className="mb-14"
+          >
+            <motion.p
+              variants={fadeUp}
+              className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-4"
+            >
+              Kariera
+            </motion.p>
+            <motion.h2
+              variants={fadeUp}
+              className="text-[32px] md:text-[48px] leading-none tracking-tight uppercase font-medium text-ink"
+            >
+              Otwarte rekrutacje
+            </motion.h2>
+          </motion.div>
+
+          <motion.div
+            initial="hidden"
+            whileInView="show"
+            viewport={VP}
+            variants={stagger}
+          >
+            {positions.map(({ title, desc, requirements }) => (
+              <motion.div
+                key={title}
+                variants={fadeUp}
+                className="grid grid-cols-1 md:grid-cols-[1fr_1.4fr] gap-4 md:gap-16 py-10 border-b border-muted first:border-t"
+              >
+                <h3 className="text-[20px] md:text-[26px] leading-snug font-medium text-ink">
+                  {title}
+                </h3>
+                <div>
+                  <p className="text-[18px] leading-[1.55] font-light text-ink mb-4">
+                    {desc}
+                  </p>
+                  <p className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-2">
+                    Wymagania
+                  </p>
+                  <p className="text-[15px] leading-snug font-normal text-muted">
+                    {requirements}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
       </section>
     </>
   );
