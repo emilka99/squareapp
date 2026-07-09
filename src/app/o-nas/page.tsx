@@ -333,14 +333,14 @@ export default function ONas() {
         </div>
       </section>
 
-      {/* CTA */}
+      {/* CTA + OTWARTE REKRUTACJE */}
       <section id="kariera">
         <motion.div
           initial="hidden"
           whileInView="show"
           viewport={VP}
           variants={stagger}
-          className={`${SITE_CONTAINER} py-24 flex flex-col md:flex-row items-start md:items-end justify-between gap-8`}
+          className={`${SITE_CONTAINER} pt-24 pb-14 flex flex-col md:flex-row items-start md:items-end justify-between gap-8`}
         >
           <motion.h2
             variants={fadeUp}
@@ -357,31 +357,17 @@ export default function ONas() {
             </Link>
           </motion.div>
         </motion.div>
-      </section>
 
-      {/* OTWARTE REKRUTACJE */}
-      <section className="border-t border-[rgba(0,0,0,0.1)]">
-        <div className={`${SITE_CONTAINER} py-20 md:py-28`}>
-          <motion.div
+        <div className={`${SITE_CONTAINER} pb-24`}>
+          <motion.p
             initial="hidden"
             whileInView="show"
             viewport={VP}
-            variants={stagger}
-            className="mb-14"
+            variants={fadeUp}
+            className="text-[20px] md:text-[26px] leading-snug font-medium text-ink mb-6"
           >
-            <motion.p
-              variants={fadeUp}
-              className="text-[13px] leading-none uppercase tracking-widest font-normal text-muted mb-4"
-            >
-              Kariera
-            </motion.p>
-            <motion.h2
-              variants={fadeUp}
-              className="text-[32px] md:text-[48px] leading-none tracking-tight uppercase font-medium text-ink"
-            >
-              Otwarte rekrutacje
-            </motion.h2>
-          </motion.div>
+            Otwarte rekrutacje
+          </motion.p>
 
           <motion.div
             initial="hidden"
