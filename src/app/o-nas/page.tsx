@@ -214,14 +214,14 @@ export default function ONas() {
               variants={fadeUp}
               className="text-[32px] md:text-[48px] leading-none tracking-tight uppercase font-medium text-ink"
             >
-              Nasze restauracje i hotele
+              Zaprzyjaźnione miejsca
             </motion.h2>
           </motion.div>
         </div>
 
         {/* Cards — start at container left edge, bleed right */}
         <div
-          className="flex gap-[3px] overflow-x-auto no-scrollbar pb-16 px-6 md:px-[48px] lg:px-[64px]"
+          className="flex gap-8 overflow-x-auto no-scrollbar pb-16 px-6 md:px-[48px] lg:px-[64px]"
           style={{ scrollSnapType: "x mandatory" }}
         >
           {ecosystem.map(({ name, type, address, instagram, bg }, i) => (
@@ -263,7 +263,7 @@ export default function ONas() {
                   href={`https://instagram.com/${instagram}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="shrink-0 text-muted hover:text-ink transition-colors duration-200 mt-0.5"
+                  className="shrink-0 flex items-center justify-center w-9 h-9 bg-ink text-bg hover:bg-sage transition-colors duration-200"
                   aria-label={`Instagram ${name}`}
                 >
                   <InstagramIcon />
