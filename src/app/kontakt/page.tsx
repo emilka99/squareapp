@@ -34,6 +34,12 @@ const contactPersons = [
     phone: "+48 533 378 420",
     email: "aleksandra@squarestate.pl",
   },
+  {
+    role: "Rola do uzupełnienia",
+    name: "Aleksandra Plewa",
+    phone: "+48 000 000 000",
+    email: "aleksandra.plewa@squarestate.pl",
+  },
 ];
 
 const miniFaq = [
